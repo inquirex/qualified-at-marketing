@@ -1,0 +1,757 @@
+/* Inquirex Presentation Theme
+ * Warm amber palette tuned to the Vanta WAVES background (color 0x432800).
+ * Screen: transparent slides letting animated waves show through.
+ * Print:  white bg, dark-grey body text, black headers.
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Bebas+Neue&family=Dosis:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap");
+
+:root {
+  /* Warm amber / espresso palette — harmonizes with Vanta 0x432800 waves */
+  --brand: #e9b872; /* honey gold */
+  --brand-light: #fde68a; /* pale gold */
+  --accent: #fb923c; /* warm coral */
+  --accent-light: #fed7aa; /* peach */
+  --highlight: #ffd166; /* bright amber, for emphasis */
+
+  --bg-dark: #0a0604; /* espresso (only used under print) */
+  --bg-surface: rgba(
+    20,
+    12,
+    4,
+    0.78
+  ); /* translucent panel for content blocks */
+  --panel-border: rgba(233, 184, 114, 0.22);
+
+  --text-primary: #fef8e7; /* cream */
+  --text-muted: #cdb28a; /* muted sand */
+  --text-soft: rgba(254, 248, 231, 0.88);
+
+  --success: #86efac;
+  --code-bg: rgba(14, 9, 4, 0.92);
+  --code-border: rgba(233, 184, 114, 0.18);
+}
+
+/* -------------------------------------------------------------------------
+ * Vanta background layer
+ * ------------------------------------------------------------------------- */
+
+html,
+body {
+  background: #0a0604; /* fallback while vanta initializes */
+}
+
+#vanta-bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none; /* let reveal.js receive keyboard / mouse */
+}
+
+/* Subtle warm vignette to deepen the edges and settle text in the middle. */
+#vanta-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(10, 6, 4, 0) 0%,
+    rgba(10, 6, 4, 0.35) 65%,
+    rgba(10, 6, 4, 0.7) 100%
+  );
+  pointer-events: none;
+}
+
+/* Make reveal transparent so vanta shows through */
+.reveal-viewport,
+.reveal,
+.reveal .backgrounds,
+.reveal .slide-background,
+.reveal .slide-background-content {
+  background: transparent !important;
+}
+
+.reveal .slides {
+  background: transparent;
+  /* reveal.js sets `top:50%; left:50%` inline on .slides to center it.
+   * Override: keep horizontal centering, but anchor the bottom at 10% from the
+   * viewport bottom so content lifts upward. */
+  inset: 50% auto -10% 50% !important;
+}
+
+/* Lift the slides above the vanta layer */
+.reveal {
+  position: relative;
+  z-index: 1;
+}
+
+/* -------------------------------------------------------------------------
+ * Typography
+ * ------------------------------------------------------------------------- */
+
+.reveal {
+  font-family: "Dosis", "Helvetica Neue", sans-serif;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55); /* carves text against waves */
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+  font-family: "Bebas Neue", "Dosis", sans-serif;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+  text-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.55),
+    0 1px 0 rgba(0, 0, 0, 0.35);
+}
+
+.reveal h1 {
+  font-size: 3em;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  background: linear-gradient(135deg, #fff3b0 0%, #f0a020 55%, #b45309 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  /* Tight 3px dark core + soft 20px halo — drop-shadow because the text fill
+   * is transparent (gradient via background-clip), so text-shadow won't render. */
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.85))
+    drop-shadow(0 0 20px rgba(0, 0, 0, 0.6));
+}
+
+.reveal h2 {
+  font-family: "Barlow Condensed", "Bebas Neue", "Dosis", sans-serif;
+  font-weight: 600;
+  font-size: 2em;
+  letter-spacing: 0.01em;
+  margin-bottom: 0.5em;
+  color: #f0a020;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+}
+
+.reveal h3 {
+  font-size: 1.4em;
+  color: var(--accent-light);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+.reveal h4 {
+  font-family: "Dosis", "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  font-size: 1.15em;
+  letter-spacing: 0;
+  color: var(--text-primary);
+}
+
+/* -------------------------------------------------------------------------
+ * Typewriter effect (see assets/js/typewriter.js)
+ * ------------------------------------------------------------------------- */
+
+.reveal .tw-slide .tw-letter {
+  display: inline-block;
+  white-space: pre; /* keep spaces visible */
+  opacity: 0;
+}
+
+.reveal .tw-slide.tw-playing .tw-letter {
+  animation: tw-reveal 0.12s ease-out forwards;
+  /* per-letter `animation-delay` is set inline by typewriter.js */
+}
+
+@keyframes tw-reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal .tw-slide .tw-letter,
+  .reveal .tw-slide.tw-playing .tw-letter {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+.reveal p,
+.reveal li {
+  font-size: 0.88em;
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+
+.reveal small {
+  color: var(--text-muted);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.reveal em {
+  color: var(--highlight);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.reveal strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.reveal img.image-with-shadow {
+  opacity: 0.7;
+  top: 2%;
+  right: 10%;
+  width: 600px;
+  min-height: 800px;
+  margin-top: -20px;
+  position: absolute;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(4px);
+  text-shadow: none;
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--panel-border);
+  backdrop-filter: blur(4px);
+}
+
+/* -------------------------------------------------------------------------
+ * Blockquotes, tables, code, lists
+ * ------------------------------------------------------------------------- */
+
+.reveal blockquote {
+  background: var(--bg-surface);
+  border-left: 4px solid var(--brand);
+  padding: 0.9em 1.3em;
+  border-radius: 0 10px 10px 0;
+  font-style: italic;
+  color: var(--text-primary);
+  width: 90%;
+  margin: 0.5em auto;
+  font-size: 0.85em;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  text-shadow: none;
+}
+
+.reveal table {
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0.5em auto;
+  font-size: 0.72em;
+  background: var(--bg-surface);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--panel-border);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.reveal table th {
+  background: linear-gradient(
+    180deg,
+    rgba(251, 146, 60, 0.25),
+    rgba(233, 184, 114, 0.12)
+  );
+  color: var(--brand-light);
+  font-family: "Bebas Neue", "Dosis", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  padding: 0.6em 0.9em;
+  border-bottom: 1px solid var(--panel-border);
+  text-align: left;
+  text-shadow: none;
+}
+
+.reveal table td {
+  padding: 0.5em 0.9em;
+  border-bottom: 1px solid rgba(233, 184, 114, 0.08);
+  color: var(--text-soft);
+  text-shadow: none;
+}
+
+.reveal table tr:last-child td {
+  border-bottom: none;
+}
+
+.reveal table tr:nth-child(even) td {
+  background: rgba(233, 184, 114, 0.04);
+}
+
+/* Mermaid diagrams (rendered inline by assets/js/mermaid-init.js) */
+.reveal .mermaid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5em auto;
+  background: transparent;
+  width: 100%;
+  max-width: 1100px;
+  text-shadow: none;
+}
+
+.reveal .mermaid svg {
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.45));
+}
+
+/* Let the labels use our display font, at 2x mermaid's default size (~16px → 32px) */
+.reveal .mermaid .nodeLabel,
+.reveal .mermaid .edgeLabel,
+.reveal .mermaid foreignObject div,
+.reveal .mermaid text {
+  font-family: "Dosis", "Helvetica Neue", sans-serif !important;
+  font-size: 32px !important;
+}
+
+/* Two-column table wrapper (see `## 11 Typed Data Types` in slides.md) */
+.reveal .two-col-tables {
+  display: flex;
+  flex-direction: row;
+  gap: 1.2em;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+}
+
+.reveal .two-col-tables > div {
+  flex: 1 1 50%;
+  min-width: 0;
+}
+
+.reveal .two-col-tables table {
+  width: 100%;
+  margin: 0;
+  font-size: 0.65em;
+}
+
+.reveal pre {
+  width: 95%;
+  margin: 0.4em auto;
+  font-size: 0.4964em;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
+  border-radius: 12px;
+  border: 1px solid var(--code-border);
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.reveal pre code {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  padding: 1em 1.2em;
+  line-height: 1.5;
+  background: var(--code-bg);
+  border-radius: 12px;
+  max-height: 520px;
+  text-shadow: none;
+}
+
+.reveal code {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  background: rgba(251, 146, 60, 0.15);
+  padding: 0.1em 0.38em;
+  border-radius: 5px;
+  font-size: 0.9em;
+  color: var(--highlight);
+  border: 1px solid rgba(251, 146, 60, 0.18);
+  text-shadow: none;
+}
+
+.reveal pre code {
+  background: var(--code-bg);
+  color: var(--text-primary);
+  border: none;
+}
+
+.reveal ul,
+.reveal ol {
+  text-align: left;
+  margin-left: 0;
+}
+
+.reveal li {
+  margin-bottom: 0.35em;
+}
+
+.reveal li::marker {
+  color: var(--brand);
+}
+
+/* -------------------------------------------------------------------------
+ * Admonitions / callouts (Obsidian / GFM syntax — see assets/js/admonitions.js)
+ * ------------------------------------------------------------------------- */
+
+.reveal .admonition {
+  --adm-accent: var(--brand);
+  --adm-bg: rgba(20, 12, 4, 0.82);
+  --adm-icon: "ℹ";
+
+  background: var(--adm-bg);
+  border-left: 4px solid var(--adm-accent);
+  border-radius: 0 10px 10px 0;
+  padding: 0.9em 1.3em 0.9em 1.5em;
+  margin: 0.6em auto;
+  width: 90%;
+  text-align: left;
+  color: var(--text-primary);
+  text-shadow: none;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.reveal .admonition-title {
+  font-family: "Bebas Neue", "Dosis", sans-serif;
+  font-weight: 400;
+  font-size: 1.15em;
+  letter-spacing: 0.1em;
+  color: var(--adm-accent);
+  margin-bottom: 0.35em;
+  display: flex;
+  align-items: baseline;
+  gap: 0.55em;
+  text-shadow: none;
+}
+
+.reveal .admonition-title::before {
+  content: var(--adm-icon);
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", system-ui, sans-serif;
+  font-size: 1.05em;
+  line-height: 1;
+}
+
+.reveal .admonition-body {
+  font-size: 0.88em;
+  line-height: 1.55;
+  color: var(--text-soft);
+}
+
+.reveal .admonition-body > *:first-child {
+  margin-top: 0;
+}
+.reveal .admonition-body > *:last-child {
+  margin-bottom: 0;
+}
+
+.reveal .admonition-body p,
+.reveal .admonition-body li {
+  text-shadow: none;
+}
+
+/* Type variants */
+
+.reveal .admonition-info,
+.reveal .admonition-note {
+  --adm-accent: #7dd3fc;
+  --adm-bg: rgba(10, 28, 44, 0.82);
+  --adm-icon: "ℹ";
+}
+
+.reveal .admonition-tip,
+.reveal .admonition-hint,
+.reveal .admonition-success {
+  --adm-accent: #86efac;
+  --adm-bg: rgba(12, 34, 22, 0.82);
+  --adm-icon: "✦";
+}
+
+.reveal .admonition-important {
+  --adm-accent: var(--highlight);
+  --adm-bg: rgba(40, 28, 10, 0.85);
+  --adm-icon: "★";
+}
+
+.reveal .admonition-warning {
+  --adm-accent: #fb923c;
+  --adm-bg: rgba(46, 24, 8, 0.85);
+  --adm-icon: "⚠";
+}
+
+.reveal .admonition-caution,
+.reveal .admonition-danger {
+  --adm-accent: #f87171;
+  --adm-bg: rgba(46, 14, 14, 0.85);
+  --adm-icon: "⛔";
+}
+
+/* -------------------------------------------------------------------------
+ * Title slide
+ * ------------------------------------------------------------------------- */
+
+.title-slide h1 {
+  font-size: 4.2em;
+  margin-bottom: 0.1em;
+  letter-spacing: 0.04em;
+}
+
+.title-slide h3 {
+  font-size: 1.3em;
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+/* -------------------------------------------------------------------------
+ * Links, hr, progress, slide number
+ * ------------------------------------------------------------------------- */
+
+.reveal a {
+  color: var(--brand-light);
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(233, 184, 114, 0.4);
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.reveal a:hover {
+  color: var(--highlight);
+  border-bottom-color: var(--highlight);
+}
+
+.reveal hr {
+  border: none;
+  border-top: 1px solid rgba(233, 184, 114, 0.25);
+  margin: 1em 0;
+}
+
+.reveal .slide-number {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.6em;
+  color: var(--text-muted);
+  background: transparent;
+}
+
+.reveal .progress {
+  height: 3px;
+  color: var(--brand);
+}
+
+.reveal .fragment.highlight-current-blue.current-fragment {
+  color: var(--brand-light);
+}
+
+/* Anchor every slide's heading at ~80px from the top of the stage.
+ * Paired with `center: false` in Reveal.initialize() — without that,
+ * reveal.js sets an inline `top` on each section and overrides this. */
+.reveal .slides > section {
+  padding: 80px 40px 20px 40px;
+}
+
+/* First heading sits flush with the padding — no extra browser margin. */
+.reveal .slides > section > h1:first-child,
+.reveal .slides > section > h2:first-child,
+.reveal .slides > section > h3:first-child {
+  margin-top: 0;
+}
+
+/* Title slides (opener + closer) stay optically centered, not top-aligned. */
+.reveal .slides > section.title-slide {
+  padding-top: 150px;
+}
+
+/* -------------------------------------------------------------------------
+ * Print / PDF export
+ * ------------------------------------------------------------------------- */
+
+/* -------------------------------------------------------------------------
+ * reveal.js `?print-pdf` mode — paginated PDF export.
+ *
+ * reveal.js adds `html.print-pdf` + `html.reveal-print` when `?print-pdf` is
+ * in the URL. It rewrites layout so every slide becomes its own `.pdf-page`
+ * with `page-break-after: always`. Our animated Vanta canvas is fixed and
+ * only renders on the first page by default — so we capture a static PNG
+ * of it on load (see index.html `captureVantaSnapshot`) and apply that
+ * snapshot as the repeating background of every paginated slide here.
+ *
+ * The fallback gradient (used before the snapshot is ready, or if the
+ * WebGL read fails) approximates the warm Vanta hue.
+ * ------------------------------------------------------------------------- */
+
+html.print-pdf {
+  /* Fallback gradient if `--vanta-snapshot` never gets set (WebGL read
+   * blocked, canvas never rendered, etc.). */
+  --vanta-snapshot: linear-gradient(
+    135deg,
+    #1a0f06 0%,
+    #281c0a 45%,
+    #0a0604 100%
+  );
+}
+
+/* Hide the fixed Vanta layer in paginated mode — we're using the static
+ * snapshot for each page. */
+html.print-pdf #vanta-bg {
+  display: none !important;
+}
+
+/* Unset our screen-only inset override so reveal's own print-pdf layout wins. */
+html.print-pdf .reveal .slides {
+  inset: auto !important;
+}
+
+/* Each paginated page gets the snapshot as its background. */
+html.print-pdf .reveal .slides .pdf-page,
+html.print-pdf .reveal .slides > section {
+  background-image: var(--vanta-snapshot) !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-color: #0a0604 !important; /* behind the image, in case it's a gradient */
+  print-color-adjust: exact !important;
+  -webkit-print-color-adjust: exact !important;
+}
+
+/* reveal.js's own print-pdf CSS sets body/reveal background to white via its
+ * black.css theme. Restore transparency so our page backgrounds show. */
+html.print-pdf,
+html.print-pdf body,
+html.print-pdf .reveal,
+html.print-pdf .reveal-viewport,
+html.print-pdf .reveal .backgrounds,
+html.print-pdf .reveal .slide-background,
+html.print-pdf .reveal .slide-background-content {
+  background: transparent !important;
+  background-image: none !important;
+}
+
+/* Text palette in print-pdf — keep the warm screen colors rather than the
+ * black-on-white defaults reveal's print CSS enforces. */
+html.print-pdf .reveal,
+html.print-pdf .reveal p,
+html.print-pdf .reveal li,
+html.print-pdf .reveal small,
+html.print-pdf .reveal td,
+html.print-pdf .reveal blockquote {
+  color: var(--text-soft) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55) !important;
+}
+
+html.print-pdf .reveal h1 {
+  background: linear-gradient(
+    135deg,
+    #fff3b0 0%,
+    #f0a020 55%,
+    #b45309 100%
+  ) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.85))
+    drop-shadow(0 0 20px rgba(0, 0, 0, 0.6)) !important;
+  text-shadow: none !important;
+}
+
+html.print-pdf .reveal h2 {
+  color: #f0a020 !important;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.9) !important;
+}
+
+html.print-pdf .reveal h3 {
+  color: var(--accent-light) !important;
+}
+html.print-pdf .reveal h4 {
+  color: var(--text-primary) !important;
+}
+html.print-pdf .reveal em {
+  color: var(--highlight) !important;
+}
+html.print-pdf .reveal strong {
+  color: #ffffff !important;
+}
+
+html.print-pdf .reveal a,
+html.print-pdf .reveal a:link,
+html.print-pdf .reveal a:visited {
+  color: var(--brand-light) !important;
+}
+
+/* Content blocks — preserve the translucent floating-panel look. */
+html.print-pdf .reveal blockquote {
+  background: var(--bg-surface) !important;
+  color: var(--text-primary) !important;
+  border-left: 4px solid var(--brand) !important;
+}
+
+html.print-pdf .reveal table {
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--panel-border) !important;
+}
+html.print-pdf .reveal table th {
+  background: linear-gradient(
+    180deg,
+    rgba(251, 146, 60, 0.25),
+    rgba(233, 184, 114, 0.12)
+  ) !important;
+  color: var(--brand-light) !important;
+  border-bottom: 1px solid var(--panel-border) !important;
+}
+html.print-pdf .reveal table td {
+  color: var(--text-soft) !important;
+  border-bottom: 1px solid rgba(233, 184, 114, 0.08) !important;
+}
+html.print-pdf .reveal table tr:nth-child(even) td {
+  background: rgba(233, 184, 114, 0.04) !important;
+}
+
+html.print-pdf .reveal pre,
+html.print-pdf .reveal pre code {
+  background: var(--code-bg) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--code-border) !important;
+}
+html.print-pdf .reveal code {
+  background: rgba(251, 146, 60, 0.15) !important;
+  color: var(--highlight) !important;
+  border: 1px solid rgba(251, 146, 60, 0.18) !important;
+}
+
+/* Typewriter letters: always visible in export. */
+html.print-pdf .reveal .tw-letter {
+  opacity: 1 !important;
+  animation: none !important;
+  display: inline !important;
+}
+
+/* -------------------------------------------------------------------------
+ * Viewport-specific layout
+ *
+ * The reveal stage is fixed at 1280×720, but these CSS rules still shape
+ * the layout *inside* the stage. They use viewport orientation as the signal.
+ * ------------------------------------------------------------------------- */
+
+/* Wide screens (landscape): pull titles closer to the top — 50px total margin. */
+@media (orientation: landscape) {
+  .reveal .slides > section {
+    padding-top: 50px;
+  }
+
+  .reveal .slides > section.title-slide {
+    padding-top: 120px; /* still optically centered, just tighter */
+  }
+}
+
+/* Tall screens (portrait): let code blocks grow vertically into the extra room. */
+@media (orientation: portrait) {
+  .reveal pre code {
+    max-height: none;
+  }
+
+  .reveal pre {
+    max-height: calc(100vh - 160px);
+  }
+}

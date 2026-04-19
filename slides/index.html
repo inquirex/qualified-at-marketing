@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inquirex — Deterministic DSL meets Probabilistic LLM</title>
+    <meta
+      name="description"
+      content="A declarative, rules-driven questionnaire engine with LLM integration"
+    />
+    <meta name="author" content="Konstantin Gredeskoul" />
+
+    <!-- Reveal.js core CSS -->
+    <link rel="stylesheet" href="vendor/reveal/dist/reveal.css" />
+    <link
+      rel="stylesheet"
+      href="vendor/reveal/dist/theme/black.css"
+      id="theme"
+    />
+
+    <!-- Syntax highlighting theme (ships with reveal.js) -->
+    <link
+      rel="stylesheet"
+      href="vendor/reveal/plugin/highlight/monokai.css"
+    />
+
+    <!-- Custom theme (overrides base theme) -->
+    <link rel="stylesheet" href="assets/css/theme.css" />
+  </head>
+
+  <body>
+    <!-- Animated Vanta WAVES background (hidden in print / PDF) -->
+    <div id="vanta-bg"></div>
+
+    <div class="reveal">
+      <div class="slides">
+        <!-- Slides loaded from external Markdown file -->
+        <section
+          data-markdown="slides.md"
+          data-separator="^---$"
+          data-separator-vertical="^----$"
+          data-separator-notes="^Notes:"
+          data-charset="utf-8"
+        ></section>
+      </div>
+    </div>
+
+    <!-- Three.js r134 + Vanta WAVES (loaded locally for offline reliability) -->
+    <script src="assets/js/three.r134.min.js"></script>
+    <script>
+      // Force preserveDrawingBuffer=true on every WebGLRenderer so we can
+      // later call `canvas.toDataURL()` to snapshot the Vanta output into a
+      // static image (used for print-pdf page backgrounds). Without this,
+      // WebGL canvas reads return blank.
+      (function () {
+        if (!window.THREE || !window.THREE.WebGLRenderer) return;
+        const Original = window.THREE.WebGLRenderer;
+        window.THREE.WebGLRenderer = function (opts) {
+          opts = Object.assign({}, opts || {}, { preserveDrawingBuffer: true });
+          return new Original(opts);
+        };
+        window.THREE.WebGLRenderer.prototype = Original.prototype;
+      })();
+    </script>
+    <script src="assets/js/vanta.waves.min.js"></script>
+
+    <!-- Reveal.js -->
+    <script src="vendor/reveal/dist/reveal.js"></script>
+    <script src="vendor/reveal/plugin/markdown/markdown.js"></script>
+    <script src="vendor/reveal/plugin/highlight/highlight.js"></script>
+    <script src="vendor/reveal/plugin/notes/notes.js"></script>
+
+    <!-- Admonition / callout renderer (Obsidian / GFM syntax) -->
+    <script src="assets/js/admonitions.js"></script>
+
+    <!-- Typewriter effect for the "Nothing combines" slide -->
+    <script src="assets/js/typewriter.js"></script>
+
+    <script>
+      // ?pdf in the URL marks the deck as a PDF-export render.
+      // Adds html.pdf-mode so CSS can disable our custom overrides
+      // (inset, typewriter) without touching reveal.js's own print-pdf mode.
+      if (new URLSearchParams(window.location.search).has('pdf')) {
+        document.documentElement.classList.add('pdf-mode');
+      }
+
+      let vantaInstance = null;
+      if (window.VANTA && window.VANTA.WAVES) {
+        vantaInstance = VANTA.WAVES({
+          el: '#vanta-bg',
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.0,
+          minWidth: 200.0,
+          scale: 1.0,
+          scaleMobile: 1.0,
+          color: 0x43280014,
+          shininess: 84.0,
+          waveHeight: 11.0,
+          waveSpeed: 0.5,
+          zoom: 0.97
+        })
+      }
+
+      // Snapshot the Vanta canvas once it's rendered and publish as a CSS
+      // custom property so `html.print-pdf` can apply it as a static
+      // background on every paginated slide. Retries for a few seconds to
+      // let Three.js produce a frame before we read it.
+      (function captureVantaSnapshot() {
+        let attempts = 0;
+        const max = 10;
+        const tick = () => {
+          attempts++;
+          const canvas = document.querySelector('#vanta-bg canvas');
+          if (canvas) {
+            try {
+              const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+              if (dataUrl && dataUrl.length > 5000) {
+                document.documentElement.style.setProperty(
+                  '--vanta-snapshot',
+                  `url("${dataUrl}")`
+                );
+                return; // success
+              }
+            } catch (err) {
+              console.warn('[vanta-snapshot]', err);
+            }
+          }
+          if (attempts < max) setTimeout(tick, 300);
+        };
+        setTimeout(tick, 400);
+      })();
+
+      Reveal.initialize({
+        hash: true,
+        slideNumber: 'c/t',
+        center: false, // titles anchored via CSS padding-top (see theme.css)
+        transition: 'fade',
+        transitionSpeed: 'fast',
+        backgroundTransition: 'fade',
+        width: 1280,
+        height: 720,
+        margin: 0.08,
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+      })
+    </script>
+  </body>
+</html>

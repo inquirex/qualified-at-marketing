@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>qualified.at — Smart Intake Forms Powered by AI</title>
+  <meta name="description" content="Build branching questionnaires that learn. One free-text answer replaces dozens of questions. Deterministic DSL meets probabilistic LLM." />
+  <meta name="author" content="Agentica Group" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;400;500;600;700&family=Bebas+Neue&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+       TOKENS
+       ═══════════════════════════════════════════════════════════════ */
+    :root {
+      --bg-deep:       #0c0806;
+      --bg-panel:      #161210;
+      --bg-surface:    #1e1a16;
+      --bg-elevated:   #2a2420;
+      --brand:         #e9b872;
+      --brand-light:   #fde68a;
+      --accent:        #ff4b15;
+      --accent-soft:   #ff7b4f;
+      --text-primary:  #fef8e7;
+      --text-body:     #d4cbbf;
+      --text-muted:    #9a8e80;
+      --border:        rgba(233,184,114,0.12);
+      --border-accent: rgba(255,75,21,0.25);
+      --glow-brand:    rgba(233,184,114,0.15);
+      --glow-accent:   rgba(255,75,21,0.12);
+      --radius:        12px;
+      --radius-lg:     20px;
+      --font-display:  'Bebas Neue', 'Impact', sans-serif;
+      --font-body:     'Dosis', sans-serif;
+      --font-mono:     'JetBrains Mono', monospace;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       RESET & BASE
+       ═══════════════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-body);
+      font-weight: 500;
+      color: var(--text-body);
+      background: var(--bg-deep);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    a { color: var(--brand); text-decoration: none; transition: color .2s; }
+    a:hover { color: var(--brand-light); }
+    ::selection { background: rgba(233,184,114,0.3); color: var(--text-primary); }
+
+    /* ═══════════════════════════════════════════════════════════════
+       LAYOUT
+       ═══════════════════════════════════════════════════════════════ */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    section { padding: 6rem 0; position: relative; }
+
+    /* ═══════════════════════════════════════════════════════════════
+       NOISE TEXTURE OVERLAY
+       ═══════════════════════════════════════════════════════════════ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       TYPOGRAPHY
+       ═══════════════════════════════════════════════════════════════ */
+    h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.06em; font-weight: 400; }
+    h1 { font-size: clamp(3.2rem, 8vw, 6.5rem); line-height: 0.95; color: var(--text-primary); }
+    h2 { font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.05; color: var(--text-primary); }
+    h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); line-height: 1.1; color: var(--brand); }
+    p { font-size: 1.15rem; max-width: 42em; }
+    .lead { font-size: 1.35rem; font-weight: 400; color: var(--text-body); line-height: 1.6; }
+    .mono { font-family: var(--font-mono); font-size: 0.9em; }
+    .text-brand { color: var(--brand); }
+    .text-accent { color: var(--accent); }
+    .text-muted { color: var(--text-muted); }
+
+    /* ═══════════════════════════════════════════════════════════════
+       NAV
+       ═══════════════════════════════════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.2rem 2rem;
+      background: rgba(12,8,6,0.75);
+      backdrop-filter: blur(16px) saturate(1.4);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background .3s;
+    }
+    .nav-brand {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      letter-spacing: 0.12em;
+      color: var(--text-primary);
+    }
+    .nav-brand span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a { font-size: 0.95rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.04em; }
+    .nav-links a:hover { color: var(--brand); }
+
+    /* ═══════════════════════════════════════════════════════════════
+       BUTTONS
+       ═══════════════════════════════════════════════════════════════ */
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      font-family: var(--font-body); font-weight: 700; font-size: 1rem;
+      letter-spacing: 0.03em;
+      border: none; border-radius: var(--radius); cursor: pointer;
+      transition: all .25s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #c43a0e);
+      color: #fff;
+      box-shadow: 0 4px 24px var(--glow-accent), inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(255,75,21,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--brand);
+      border: 1.5px solid var(--border);
+    }
+    .btn-ghost:hover {
+      border-color: var(--brand);
+      background: rgba(233,184,114,0.06);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding-top: 5rem;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%; right: -15%;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, var(--glow-accent) 0%, transparent 65%);
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -10%; left: -10%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, var(--glow-brand) 0%, transparent 60%);
+      filter: blur(60px);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      padding: 0.4rem 1rem;
+      border: 1px solid var(--border-accent);
+      border-radius: 100px;
+      background: rgba(255,75,21,0.04);
+    }
+    .hero-eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse-dot 2s infinite; }
+    @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .hero h1 {
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--brand) 70%, var(--accent-soft));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+    }
+    .hero .lead { margin-bottom: 2.5rem; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    /* ═══════════════════════════════════════════════════════════════
+       PRESENTATION EMBED
+       ═══════════════════════════════════════════════════════════════ */
+    .deck-section {
+      padding: 5rem 0 6rem;
+    }
+    .deck-section h2 { text-align: center; margin-bottom: 0.6rem; }
+    .deck-section .lead { text-align: center; margin: 0 auto 3rem; }
+    .deck-frame {
+      position: relative;
+      max-width: 1120px;
+      margin: 0 auto;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg-panel);
+      box-shadow:
+        0 0 0 1px rgba(233,184,114,0.05),
+        0 24px 80px rgba(0,0,0,0.5),
+        0 0 120px var(--glow-brand);
+    }
+    .deck-toolbar {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.65rem 1rem;
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border);
+    }
+    .deck-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .deck-dot:nth-child(1) { background: #ff5f56; }
+    .deck-dot:nth-child(2) { background: #ffbd2e; }
+    .deck-dot:nth-child(3) { background: #27c93f; }
+    .deck-toolbar-title {
+      flex: 1; text-align: center;
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .deck-frame iframe {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: none;
+      background: #000;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       FEATURES GRID
+       ═══════════════════════════════════════════════════════════════ */
+    .features { padding: 6rem 0; }
+    .features h2 { text-align: center; margin-bottom: 0.6rem; }
+    .features .lead { text-align: center; margin: 0 auto 3.5rem; }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .feature-card {
+      padding: 2rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--bg-panel);
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+    }
+    .feature-card:hover {
+      border-color: var(--brand);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 30px var(--glow-brand);
+    }
+    .feature-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 48px; height: 48px;
+      border-radius: 10px;
+      margin-bottom: 1.2rem;
+      font-size: 1.5rem;
+      background: rgba(233,184,114,0.08);
+      border: 1px solid var(--border);
+    }
+    .feature-card h3 {
+      margin-bottom: 0.6rem;
+      font-size: 1.3rem;
+    }
+    .feature-card p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       HOW IT WORKS — STEPS
+       ═══════════════════════════════════════════════════════════════ */
+    .how-it-works { padding: 6rem 0; }
+    .how-it-works h2 { text-align: center; margin-bottom: 3.5rem; }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      position: relative;
+    }
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: 16.6%;
+      right: 16.6%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--border) 0%, var(--brand) 50%, var(--border) 100%);
+    }
+    .step {
+      text-align: center;
+      position: relative;
+    }
+    .step-number {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 72px; height: 72px;
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--accent);
+      border: 2px solid var(--border-accent);
+      border-radius: 50%;
+      background: var(--bg-deep);
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .step h3 { margin-bottom: 0.5rem; color: var(--text-primary); font-size: 1.4rem; }
+    .step p { font-size: 1rem; color: var(--text-muted); max-width: 28em; margin: 0 auto; }
+
+    /* ═══════════════════════════════════════════════════════════════
+       CODE BLOCK (INLINE EXAMPLE)
+       ═══════════════════════════════════════════════════════════════ */
+    .code-section { padding: 5rem 0; }
+    .code-section h2 { text-align: center; margin-bottom: 0.6rem; }
+    .code-section .lead { text-align: center; margin: 0 auto 3rem; }
+    .code-window {
+      max-width: 800px;
+      margin: 0 auto;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: rgba(14,9,4,0.92);
+      box-shadow: 0 16px 64px rgba(0,0,0,0.5);
+    }
+    .code-header {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.7rem 1rem;
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border);
+    }
+    .code-header .deck-dot { width: 8px; height: 8px; }
+    .code-header span { flex: 1; text-align: center; font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); }
+    pre.code-block {
+      padding: 1.5rem 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: var(--text-body);
+      overflow-x: auto;
+      tab-size: 2;
+    }
+    .code-block .kw { color: #f97583; }
+    .code-block .sym { color: #79b8ff; }
+    .code-block .str { color: #9ecbff; }
+    .code-block .cmt { color: #6a737d; font-style: italic; }
+    .code-block .num { color: #ffab70; }
+    .code-block .fn { color: #b392f0; }
+
+    /* ═══════════════════════════════════════════════════════════════
+       CTA
+       ═══════════════════════════════════════════════════════════════ */
+    .cta-section {
+      padding: 6rem 0;
+      text-align: center;
+      position: relative;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, var(--glow-accent) 0%, transparent 60%);
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .cta-section h2 { margin-bottom: 1rem; position: relative; }
+    .cta-section .lead { margin: 0 auto 2.5rem; position: relative; }
+    .cta-section .btn { position: relative; }
+
+    /* ═══════════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════════ */
+    footer {
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    footer a { color: var(--text-muted); }
+    footer a:hover { color: var(--brand); }
+
+    /* ═══════════════════════════════════════════════════════════════
+       DIVIDERS
+       ═══════════════════════════════════════════════════════════════ */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 0 auto;
+      max-width: 800px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       ENTRANCE ANIMATIONS
+       ═══════════════════════════════════════════════════════════════ */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       RESPONSIVE
+       ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .steps { grid-template-columns: 1fr; }
+      .steps::before { display: none; }
+      .nav-links { gap: 1rem; }
+      .hero-actions { flex-direction: column; }
+      section { padding: 4rem 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════════════════════════
+       NAV
+       ════════════════════════════════════════════════════════════ -->
+  <nav>
+    <div class="nav-brand">QUALIFIED<span>.</span>AT</div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how">How It Works</a>
+      <a href="#presentation">Presentation</a>
+      <a href="#dsl">DSL</a>
+      <a href="https://github.com/inquirex" class="btn btn-ghost" style="padding: 0.5rem 1.2rem; font-size: 0.85rem;">GitHub</a>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════════════════
+       HERO
+       ════════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="container hero-content">
+      <div class="hero-eyebrow">Powered by Inquirex &mdash; open-source Ruby gems</div>
+      <h1>Ask the Right<br/>Questions.<br/>Skip the Rest.</h1>
+      <p class="lead">
+        Build branching intake forms that learn from one free-text answer.
+        A deterministic DSL defines what you need. An LLM extracts what it can.
+        The engine only asks what's left.
+      </p>
+      <div class="hero-actions">
+        <a href="#presentation" class="btn btn-primary">Watch the Presentation</a>
+        <a href="https://github.com/inquirex/inquirex" class="btn btn-ghost">View on GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ════════════════════════════════════════════════════════════
+       FEATURES
+       ════════════════════════════════════════════════════════════ -->
+  <section class="features" id="features">
+    <div class="container">
+      <h2 class="fade-in">What Makes It Different</h2>
+      <p class="lead fade-in">Not another form builder. A rules engine that speaks LLM.</p>
+
+      <div class="feature-grid">
+        <div class="feature-card fade-in">
+          <div class="feature-icon">&#9998;</div>
+          <h3>Conversational DSL</h3>
+          <p>Six verbs &mdash; <span class="mono">ask</span>, <span class="mono">say</span>, <span class="mono">header</span>, <span class="mono">btw</span>, <span class="mono">warning</span>, <span class="mono">confirm</span> &mdash; define a branching flow in pure Ruby. No YAML. No GUI drag-and-drop.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon">&#9889;</div>
+          <h3>LLM-Powered Extraction</h3>
+          <p>The <span class="mono">clarify</span> verb sends one paragraph of free text to Claude or GPT and gets back structured, typed answers. Downstream questions are automatically skipped.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon">&#128736;</div>
+          <h3>JSON Wire Format</h3>
+          <p>Every flow serializes to JSON. Rules are AST objects, not lambdas. The frontend evaluates branching locally &mdash; zero server round-trips for pure logic.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon">&#9878;</div>
+          <h3>11 Typed Data Fields</h3>
+          <p>String, text, integer, decimal, currency, boolean, enum, multi_enum, date, email, phone. Each maps to the right widget on every platform &mdash; TTY, web, mobile.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon">&#128200;</div>
+          <h3>Accumulators</h3>
+          <p>Running totals for pricing, complexity scoring, and feature gating. Declare once at the flow level, contribute from any step, read at runtime or post-processing.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon">&#127760;</div>
+          <h3>Embed Anywhere</h3>
+          <p>One <span class="mono">&lt;script&gt;</span> tag. The JavaScript widget renders in shadow DOM, fetches flow JSON from an API, walks it client-side, and posts answers back.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ════════════════════════════════════════════════════════════
+       HOW IT WORKS
+       ════════════════════════════════════════════════════════════ -->
+  <section class="how-it-works" id="how">
+    <div class="container">
+      <h2 class="fade-in">Three Steps. One Insight.</h2>
+
+      <div class="steps fade-in">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>DSL Defines</h3>
+          <p>A Ruby DSL declares every question, data type, transition rule, and widget hint. The definition is frozen and thread-safe.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>LLM Extracts</h3>
+          <p>The user types one paragraph. The <span class="mono">clarify</span> verb sends it to an LLM with a strict schema. Structured data comes back in under 2 seconds.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Engine Skips</h3>
+          <p><span class="mono">Engine#prefill!</span> merges extracted answers. Every downstream step with <span class="mono">skip_if not_empty</span> auto-advances. The user only answers what's left.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ════════════════════════════════════════════════════════════
+       PRESENTATION EMBED
+       ════════════════════════════════════════════════════════════ -->
+  <section class="deck-section" id="presentation">
+    <div class="container">
+      <h2 class="fade-in">The Full Story</h2>
+      <p class="lead fade-in">SFRuby, April 2026 &mdash; Deterministic DSL meets Probabilistic LLM</p>
+
+      <div class="deck-frame fade-in">
+        <div class="deck-toolbar">
+          <div class="deck-dot"></div>
+          <div class="deck-dot"></div>
+          <div class="deck-dot"></div>
+          <span class="deck-toolbar-title">inquirex &mdash; slides</span>
+          <div style="width: 30px;"></div>
+        </div>
+        <iframe src="slides/index.html" loading="lazy" allow="fullscreen" title="Inquirex Presentation"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ════════════════════════════════════════════════════════════
+       CODE EXAMPLE
+       ════════════════════════════════════════════════════════════ -->
+  <section class="code-section" id="dsl">
+    <div class="container">
+      <h2 class="fade-in">One DSL. Many Paths.</h2>
+      <p class="lead fade-in">A simple W-2 filer answers 8 questions. A complex business filer answers 17. Same definition.</p>
+
+      <div class="code-window fade-in">
+        <div class="code-header">
+          <div class="deck-dot"></div>
+          <div class="deck-dot"></div>
+          <div class="deck-dot"></div>
+          <span>tax_intake.rb</span>
+          <div style="width: 26px"></div>
+        </div>
+<pre class="code-block"><span class="fn">Inquirex</span>.<span class="fn">define</span> <span class="sym">id:</span> <span class="str">"tax-intake"</span> <span class="kw">do</span>
+  <span class="fn">start</span> <span class="sym">:describe</span>
+
+  <span class="fn">ask</span> <span class="sym">:describe</span> <span class="kw">do</span>
+    <span class="fn">type</span> <span class="sym">:text</span>
+    <span class="fn">question</span> <span class="str">"Describe your tax situation."</span>
+    <span class="fn">transition</span> <span class="sym">to:</span> <span class="sym">:extracted</span>
+  <span class="kw">end</span>
+
+  <span class="fn">clarify</span> <span class="sym">:extracted</span> <span class="kw">do</span>           <span class="cmt"># LLM extracts structured data</span>
+    <span class="fn">from</span> <span class="sym">:describe</span>
+    <span class="fn">schema</span> <span class="sym">filing_status:</span> <span class="sym">:enum</span>, <span class="sym">dependents:</span> <span class="sym">:integer</span>
+    <span class="fn">transition</span> <span class="sym">to:</span> <span class="sym">:filing_status</span>
+  <span class="kw">end</span>
+
+  <span class="fn">ask</span> <span class="sym">:filing_status</span> <span class="kw">do</span>
+    <span class="fn">type</span> <span class="sym">:enum</span>
+    <span class="fn">question</span> <span class="str">"Filing status?"</span>
+    <span class="fn">skip_if</span> <span class="fn">not_empty</span>(<span class="sym">:filing_status</span>)  <span class="cmt"># auto-skip if LLM filled it</span>
+    <span class="fn">transition</span> <span class="sym">to:</span> <span class="sym">:done</span>
+  <span class="kw">end</span>
+
+  <span class="fn">say</span> <span class="sym">:done</span> <span class="kw">do</span>
+    <span class="fn">text</span> <span class="str">"Thank you!"</span>
+  <span class="kw">end</span>
+<span class="kw">end</span></pre>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ════════════════════════════════════════════════════════════
+       CTA
+       ════════════════════════════════════════════════════════════ -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 class="fade-in">Ready to Build Smarter Forms?</h2>
+      <p class="lead fade-in">The gems are MIT-licensed and free forever. <span class="text-brand">qualified.at</span> is the hosted platform launching Q2 2026.</p>
+      <div class="fade-in">
+        <a href="https://github.com/inquirex/inquirex" class="btn btn-primary">Get Started on GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════
+       FOOTER
+       ════════════════════════════════════════════════════════════ -->
+  <footer>
+    <div class="container">
+      &copy; 2026 <a href="https://agentica.group">Agentica Group</a> &mdash;
+      Built by <a href="https://kig.re">Konstantin Gredeskoul</a>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════════════════════════
+       SCROLL-REVEAL
+       ════════════════════════════════════════════════════════════ -->
+  <script>
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            observer.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+  </script>
+
+</body>
+</html>
