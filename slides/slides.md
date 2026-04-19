@@ -119,7 +119,7 @@ A qualifying questionnaire is a nothing but a **directed graph** where:
 
 ## Base Gem
 
-### inquirexf
+### inquirex
 
 <br />
 

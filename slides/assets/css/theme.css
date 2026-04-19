@@ -544,11 +544,13 @@ body {
   color: var(--brand-light);
 }
 
-/* Anchor every slide's heading at ~80px from the top of the stage.
- * Paired with `center: false` in Reveal.initialize() — without that,
+/* Push content ~250px down from the stage top so slide bodies sit in the
+ * lower half of the frame (matches the embedded-iframe look on the landing
+ * page). Paired with `center: false` in Reveal.initialize() — without that,
  * reveal.js sets an inline `top` on each section and overrides this. */
-.reveal .slides > section {
-  padding: 80px 40px 20px 40px;
+.reveal .slides > section,
+.reveal .slides > section > section {
+  padding: 250px 40px 20px 40px;
 }
 
 /* First heading sits flush with the padding — no extra browser margin. */
@@ -558,9 +560,9 @@ body {
   margin-top: 0;
 }
 
-/* Title slides (opener + closer) stay optically centered, not top-aligned. */
+/* Title slides use the same 250px anchor so they line up with content slides. */
 .reveal .slides > section.title-slide {
-  padding-top: 150px;
+  padding-top: 250px;
 }
 
 /* -------------------------------------------------------------------------
@@ -734,14 +736,15 @@ html.print-pdf .reveal .tw-letter {
  * the layout *inside* the stage. They use viewport orientation as the signal.
  * ------------------------------------------------------------------------- */
 
-/* Wide screens (landscape): pull titles closer to the top — 50px total margin. */
+/* Wide screens (landscape): same 250px top anchor as the default. */
 @media (orientation: landscape) {
-  .reveal .slides > section {
-    padding-top: 50px;
+  .reveal .slides > section,
+  .reveal .slides > section > section {
+    padding-top: 250px;
   }
 
   .reveal .slides > section.title-slide {
-    padding-top: 120px; /* still optically centered, just tighter */
+    padding-top: 250px;
   }
 }
 
@@ -753,5 +756,33 @@ html.print-pdf .reveal .tw-letter {
 
   .reveal pre {
     max-height: calc(100vh - 160px);
+  }
+}
+
+/* Narrow viewports: reveal.js scales the 1280×720 stage to fit, which
+ * visually compresses the 250px top padding and pulls the heading upward.
+ * Counteract by adding more padding-top as the viewport shrinks.
+ * The inner section > section rule handles vertical stacks. */
+@media (max-width: 963px) {
+  .reveal .slides > section,
+  .reveal .slides > section > section,
+  .reveal .slides > section.title-slide {
+    padding-top: 380px !important;
+  }
+}
+
+@media (max-width: 750px) {
+  .reveal .slides > section,
+  .reveal .slides > section > section,
+  .reveal .slides > section.title-slide {
+    padding-top: 520px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .reveal .slides > section,
+  .reveal .slides > section > section,
+  .reveal .slides > section.title-slide {
+    padding-top: 640px !important;
   }
 }

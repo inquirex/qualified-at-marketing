@@ -113,6 +113,36 @@
     .nav-links a { font-size: 0.95rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.04em; }
     .nav-links a:hover { color: var(--brand); }
 
+    /* Hamburger toggle — hidden on wide viewports */
+    .nav-toggle {
+      display: none;
+      width: 42px; height: 42px;
+      background: rgba(22,18,16,0.7);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      padding: 0;
+      align-items: center; justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+      transition: background .15s, border-color .15s;
+    }
+    .nav-toggle:hover, .nav-toggle:focus-visible {
+      background: var(--bg-elevated);
+      border-color: var(--brand);
+      outline: none;
+    }
+    .nav-toggle span {
+      display: block; width: 20px; height: 2px;
+      background: var(--brand-light);
+      border-radius: 2px;
+      transition: transform .22s ease, opacity .18s ease;
+      transform-origin: center;
+    }
+    nav.open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    nav.open .nav-toggle span:nth-child(2) { opacity: 0; }
+    nav.open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
     /* ═══════════════════════════════════════════════════════════════
        BUTTONS
        ═══════════════════════════════════════════════════════════════ */
@@ -204,7 +234,7 @@
     .deck-section .lead { text-align: center; margin: 0 auto 3rem; }
     .deck-frame {
       position: relative;
-      max-width: 1120px;
+      max-width: 1400px;
       margin: 0 auto;
       border-radius: var(--radius-lg);
       overflow: hidden;
@@ -233,7 +263,7 @@
     .deck-frame iframe {
       display: block;
       width: 100%;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 17 / 10.8;
       border: none;
       background: #000;
     }
@@ -423,9 +453,64 @@
     @media (max-width: 768px) {
       .steps { grid-template-columns: 1fr; }
       .steps::before { display: none; }
-      .nav-links { gap: 1rem; }
       .hero-actions { flex-direction: column; }
       section { padding: 4rem 0; }
+
+      /* Show hamburger, collapse the link row into a dropdown panel */
+      .nav-toggle { display: flex; }
+
+      nav { padding: 0.9rem 1.2rem; }
+
+      .nav-links {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 1rem;
+        min-width: 230px;
+        max-width: calc(100vw - 2rem);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 0.5rem;
+        background: rgba(22,18,16,0.96);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: 0 20px 48px rgba(0,0,0,0.55);
+        backdrop-filter: blur(14px) saturate(1.4);
+        opacity: 0;
+        transform: translateY(-6px) scale(0.98);
+        transform-origin: top right;
+        pointer-events: none;
+        transition: opacity .18s ease, transform .18s ease;
+      }
+
+      nav.open .nav-links {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+      }
+
+      .nav-links a {
+        padding: 0.7rem 0.9rem;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        color: var(--text-primary);
+      }
+      .nav-links a:hover {
+        background: rgba(255,75,21,0.12);
+        color: var(--accent-soft);
+      }
+
+      /* The GitHub ghost-button inside the dropdown — flatten into a normal
+       * row so it aligns with the other links. */
+      .nav-links a.btn {
+        padding: 0.7rem 0.9rem !important;
+        font-size: 0.95rem !important;
+        justify-content: flex-start;
+        background: transparent !important;
+        border: 1px solid var(--border-accent);
+        color: var(--accent-soft) !important;
+        margin-top: 4px;
+      }
     }
   </style>
 </head>
@@ -437,7 +522,10 @@
        ════════════════════════════════════════════════════════════ -->
   <nav>
     <div class="nav-brand">QUALIFIED<span>.</span>AT</div>
-    <div class="nav-links">
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="primary-nav">
       <a href="#features">Features</a>
       <a href="#how">How It Works</a>
       <a href="#presentation">Presentation</a>
@@ -639,6 +727,41 @@
        SCROLL-REVEAL
        ════════════════════════════════════════════════════════════ -->
   <script>
+    // Hamburger dropdown for narrow viewports
+    (function () {
+      const nav = document.querySelector('nav');
+      const toggle = nav && nav.querySelector('.nav-toggle');
+      const links = nav && nav.querySelector('.nav-links');
+      if (!nav || !toggle || !links) return;
+
+      const setOpen = (open) => {
+        nav.classList.toggle('open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+      };
+
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setOpen(!nav.classList.contains('open'));
+      });
+
+      // Close when a link is tapped (so the in-page anchor jump isn't behind the panel)
+      links.addEventListener('click', (e) => {
+        if (e.target.closest('a')) setOpen(false);
+      });
+
+      // Close on outside click and on Escape
+      document.addEventListener('click', (e) => {
+        if (!nav.contains(e.target)) setOpen(false);
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') setOpen(false);
+      });
+
+      // If the viewport grows back past the breakpoint while open, reset state
+      const mq = window.matchMedia('(min-width: 769px)');
+      mq.addEventListener('change', (ev) => { if (ev.matches) setOpen(false); });
+    })();
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -651,6 +774,60 @@
       { threshold: 0.15 }
     );
     document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+
+    // Once the presentation iframe loads, inject a style to vertically center
+    // slide content (the source deck uses center:false for stage use) and wire
+    // up left/right arrow keys so the audience can navigate naturally.
+    const deckIframe = document.querySelector('.deck-frame iframe');
+    if (deckIframe) {
+      deckIframe.addEventListener('load', () => {
+        try {
+          const iDoc = deckIframe.contentDocument;
+          // The presentation's theme.css fights Reveal's centering with:
+          //   .reveal .slides { inset: 50% auto -10% 50% !important }
+          //   .reveal .slides > section { padding: 80px 40px 20px 40px }
+          // Override both so Reveal's built-in center:true works cleanly
+          // at every viewport width.
+          const fix = iDoc.createElement('style');
+          fix.textContent = `
+            .reveal .slides {
+              inset: auto !important;
+              top: 50% !important;
+              left: 50% !important;
+            }
+            .reveal .slides > section,
+            .reveal .slides > section > section {
+              padding: 20px 40px !important;
+            }
+            .reveal .slides > section.title-slide {
+              padding-top: 20px !important;
+            }
+          `;
+          iDoc.head.appendChild(fix);
+
+          // Flip Reveal's built-in center flag — its flexbox centering
+          // scales correctly with the transform at any iframe size.
+          const R = deckIframe.contentWindow.Reveal;
+          if (R && R.configure) {
+            R.configure({ center: true });
+            R.layout();
+          }
+        } catch (_) { /* cross-origin — no-op */ }
+      });
+
+      // Forward left/right arrow keys from the parent page into the iframe's
+      // Reveal instance (by default only up/down work because the iframe
+      // doesn't have focus).
+      document.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        try {
+          const Reveal = deckIframe.contentWindow.Reveal;
+          if (!Reveal) return;
+          if (e.key === 'ArrowRight') Reveal.next();
+          if (e.key === 'ArrowLeft')  Reveal.prev();
+        } catch (_) { /* cross-origin — no-op */ }
+      });
+    }
   </script>
 
 </body>
