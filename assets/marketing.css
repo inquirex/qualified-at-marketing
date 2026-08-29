@@ -170,7 +170,7 @@ body.body-marketing::after {
 
 .qa-section {
   position: relative;
-  padding: clamp(4.5rem, 9vw, 8.5rem) 0;
+  padding: clamp(3.5rem, 6vw, 6rem) 0;
 }
 
 .qa-wrap {
@@ -1802,6 +1802,11 @@ body.body-marketing::after {
     mask-image: none;
     -webkit-mask-image: none;
   }
+
+  /* There is no room to truncate a question and still have it mean anything. */
+  .qa-step { align-items: flex-start; }
+  .qa-step span { white-space: normal; }
+  .qa-step em, .qa-step i { padding-top: 0.15em; }
 }
 
 /* --------------------------------------------------------------------------
