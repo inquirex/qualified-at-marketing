@@ -107,10 +107,14 @@
     this.clock.onFrame = function () { self.tickTimeline(); };
 
     if (this.reduced) {
-      this.root.classList.add('is-idle');
+      // Show the finished frame outright. A play overlay here would both hide it
+      // and offer to start the motion the reader just asked not to see.
       this.finalStill();
-    } else {
+      this.root.classList.add('is-done');
+    } else if (window.IntersectionObserver) {
       this.observe();
+    } else {
+      this.root.classList.add('is-idle');
     }
 
     document.addEventListener('visibilitychange', function () {
@@ -152,6 +156,7 @@
 
   Theater.prototype.wake = function () {
     this.root.classList.remove('is-idle');
+    this.root.classList.remove('is-done');
     this.clock.running = true;
     this.started = true;
   };
@@ -435,6 +440,7 @@
       });
     }
 
+    this.root.classList.remove('is-done');
     this.act = act;
     this.actStart = this.clock.t;
     this.actDur = act === 1 ? 13500 : 21000;
@@ -691,7 +697,10 @@
       SHIELD + '<span>That is the whole product: a form that finishes the first call before anyone picks up.</span>'));
 
     await wait(3200);
-    this.root.classList.add('is-idle');
+    // Leave the finished frame on screen -- the estimate and the firm card are
+    // the whole argument, so covering them with a play overlay throws away the
+    // payoff. Point at Replay instead and let the clock stop.
+    this.root.classList.add('is-done');
     this.clock.running = false;
     this.started = false;
   };

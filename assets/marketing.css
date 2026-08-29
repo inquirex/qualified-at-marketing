@@ -1563,6 +1563,22 @@ body.body-marketing::after {
 
 .qa-theater.is-idle .qa-playbtn { display: grid; }
 
+/* Playback over: the finished frame stays put and Replay is the way back in. */
+.qa-theater.is-done [data-el="replay"] {
+  border-color: rgba(247, 103, 7, 0.55);
+  color: var(--qa-brand-2);
+  animation: qa-replay-pulse 2.4s var(--qa-ease) infinite;
+}
+
+@keyframes qa-replay-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(247, 103, 7, 0.34); }
+  55% { box-shadow: 0 0 0 6px rgba(247, 103, 7, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qa-theater.is-done [data-el="replay"] { animation: none; }
+}
+
 .qa-playbtn span {
   display: inline-flex;
   align-items: center;

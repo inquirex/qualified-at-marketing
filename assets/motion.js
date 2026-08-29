@@ -261,22 +261,27 @@
       clear();
       launcher.classList.remove('is-in');
       mini.classList.remove('is-in');
-      timers.push(setTimeout(function () { launcher.classList.add('is-in'); }, 500));
+      timers.push(setTimeout(function () { launcher.classList.add('is-in'); }, 400));
       timers.push(setTimeout(function () {
         launcher.classList.remove('is-in');
         mini.classList.add('is-in');
-      }, 3400));
-      timers.push(setTimeout(function () { mini.classList.remove('is-in'); }, 8200));
-      timers.push(setTimeout(cycle, 9000));
+      }, 2200));
+      // The open widget is the point of the section, so hold it far longer than
+      // the launcher that precedes it.
+      timers.push(setTimeout(function () { mini.classList.remove('is-in'); }, 9000));
+      timers.push(setTimeout(cycle, 9600));
     };
 
+    // Watch the browser mock rather than the whole two-column section: a third
+    // of this section can be on screen while the mock itself is still below the
+    // fold, which would spend the animation before anyone is looking at it.
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) cycle();
         else clear();
       });
-    }, { threshold: 0.35 });
-    io.observe(host);
+    }, { threshold: 0.6 });
+    io.observe(host.querySelector('.qa-browser') || host);
   }
 
   /* -------------------------------------------------------------- spotlight */
