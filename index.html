@@ -7,29 +7,23 @@
   data-bs-theme-font="sans-serif"
   data-bs-theme-primary="orange"
   data-bs-theme-radius="2"
-  >
+>
   <head>
     <meta charset="utf-8">
     <title>Qualified.at — They describe the situation. You get the answers, the tier, and the price.</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
-    <script>
-      (function() {
-        var m = document.cookie.match(/(?:^|;\s*)theme_mode=(\w+)/);
-        if (m) { document.documentElement.setAttribute('data-bs-theme', m[1]); document.documentElement.setAttribute('data-theme', m[1]); }
-      })();
-    </script>
-
-    <meta name="description" content="Tell the copilot what you need to know and it draws a branching form. When a lead arrives, they type a paragraph in their own words. AI fills what it can, asks only what is left, and hands you a scored lead with a fee range. One script tag on the site you already have.">
+    <meta name="description" content="Tell the copilot what you need to know and it draws a branching intake form. When a lead arrives they type one paragraph in their own words; the AI fills what it can, asks only what is left, and hands you a scored lead with a fee range. One script tag on the site you already have.">
     <meta name="keywords" content="lead qualification, AI intake, professional services, tax preparation intake, legal intake, branching forms, fee estimate, embed widget">
     <meta property="og:title" content="Qualified.at — They describe the situation. You get the answers, the tier, and the price.">
-    <meta property="og:description" content="The copilot draws your branching intake form. Leads describe their situation in a paragraph; AI fills what it can, asks only what is left, and hands you a scored lead with a fee range.">
+    <meta property="og:description" content="An AI copilot draws your branching intake form. Leads describe their situation in a paragraph; the model fills what it can, skips what it answered, and hands you a scored lead with a fee range.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://qualified.at">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Qualified.at — The first call, finished before anyone picks up">
-    <meta name="twitter:description" content="Leads describe their situation in their own words. AI fills the form, skips what was already answered, and hands you a scored lead with a fee range.">
+    <meta name="twitter:description" content="Leads describe their situation in their own words. The AI fills the form, skips what was already answered, and hands you a scored lead with a fee range.">
     <link rel="canonical" href="https://qualified.at">
+    <meta name="theme-color" content="#07080c">
 
     <link rel="icon" href="/favicon.ico" sizes="48x48">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -38,640 +32,891 @@
     <link rel="manifest" href="/site.webmanifest">
 
     <link rel="stylesheet" href="/assets/application.css">
+    <link rel="stylesheet" href="/assets/marketing.css">
   </head>
+
   <body class="body-marketing">
-  <a href="#content" class="visually-hidden skip-link">Skip to main content</a>
+    <a href="#content" class="visually-hidden skip-link">Skip to main content</a>
 
-  <!-- Navbar -->
-  <header role="banner">
-    <nav class="landing-navbar navbar navbar-expand-lg py-3 fixed-top" aria-label="Primary navigation">
-      <div class="container">
-        <a href="/" class="navbar-brand d-flex align-items-center gap-2" aria-label="Qualified.at home">
-          <img src="/static/logos/qualified-at-logo-64x64.png" width="29" height="29" alt="" class="rounded flex-shrink-0">
-          <span class="navbar-brand-wordmark" aria-hidden="true" style="font-size: 29px; height: 29px;">qualified@</span>
+    <div class="qa-progress" aria-hidden="true"><i data-read></i></div>
+
+    <!-- ================================================================ nav -->
+    <header role="banner">
+      <nav class="qa-nav" data-nav aria-label="Primary navigation">
+        <a href="/" class="qa-brand" aria-label="Qualified.at home">
+          <img src="/static/logos/qualified-at-logo-64x64.png" width="28" height="28" alt="">
+          <span class="navbar-brand-wordmark" aria-hidden="true">qualified@</span>
         </a>
-        <button class="navbar-toggler" type="button" id="nav-toggle" aria-controls="landing-nav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+
+        <button class="qa-nav-burger" data-nav-toggle type="button" aria-expanded="false" aria-label="Toggle navigation">
+          <i></i><i></i><i></i>
         </button>
-        <div class="collapse navbar-collapse" id="landing-nav">
-          <ul class="navbar-nav ms-auto align-items-lg-center">
-            <li class="nav-item"><a class="nav-link" href="#demos">Demos</a></li>
-            <li class="nav-item"><a class="nav-link" href="#different">Why we're different</a></li>
-            <li class="nav-item"><a class="nav-link" href="#how-it-works">How it works</a></li>
-            <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
-            <li class="nav-item ms-lg-2">
-              <a href="#" class="btn btn-ghost-primary btn-icon" id="theme-toggle" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" id="theme-icon-light" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" id="theme-icon-dark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/></svg>
-              </a>
-            </li>
-            <li class="nav-item ms-lg-1 mt-2 mt-lg-0">
-              <a class="btn btn-primary w-100 w-lg-auto" href="/users/sign_in">Log in</a>
-            </li>
-            <li class="nav-item ms-lg-1 mt-2 mt-lg-0 mb-2 mb-lg-0">
-              <a class="btn btn-cta w-100 w-lg-auto" href="/users/sign_up">Get started free</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </header>
 
-  <main id="content">
-    <!-- Hero -->
-    <section class="section-lg landing-hero pb-5">
-      <div class="container">
-        <div class="row align-items-center g-5">
-          <div class="col-lg-6">
-            <span class="badge bg-primary-lt text-primary mb-3 px-3 py-2 fs-5">The first call, finished before anyone picks up</span>
-            <h1 class="display-4 fw-bold mb-3">They describe the situation. You get <span class="text-primary">the answers, the tier, and the price</span>.</h1>
-            <p class="lead text-secondary mb-4">
+        <div class="qa-nav-panel">
+          <ul class="qa-nav-links">
+            <li><a href="#watch">Watch it work</a></li>
+            <li><a href="#insight">The insight</a></li>
+            <li><a href="#demos">Demos</a></li>
+            <li><a href="#different">Why we're different</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+          </ul>
+          <div class="qa-nav-cta">
+            <a class="qa-btn qa-btn-ghost qa-btn-sm" href="/users/sign_in">Log in</a>
+            <a class="qa-btn qa-btn-primary qa-btn-sm" href="/users/sign_up">Get started free</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id="content" class="qa-shell">
+
+      <!-- ============================================================= hero -->
+      <section class="qa-hero" id="watch">
+        <div class="qa-aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="qa-gridlines" aria-hidden="true"></div>
+
+        <div class="qa-wrap">
+          <div class="qa-hero-copy">
+            <span class="qa-eyebrow"><b></b> The first call, finished before anyone picks up</span>
+
+            <h1 class="qa-display" data-words>They describe the situation. You get <span class="qa-wash">the answers, the tier, and the price.</span></h1>
+
+            <p class="qa-lead">
               Tell the copilot what you need to know and it draws a branching form. When a lead
-              arrives, they type a paragraph in their own words. AI fills what it can, asks only
-              what is left, and hands you a scored lead with a fee range. One script tag on the
-              site you already have.
+              arrives, they type a paragraph in their own words. The AI fills what it can, asks
+              only what is left, and hands you a scored lead with a fee range.
             </p>
-            <div class="d-flex flex-wrap gap-3 mb-4">
-              <a class="btn btn-primary btn-lg px-3" href="/users/sign_up">
+
+            <div class="qa-hero-actions">
+              <a class="qa-btn qa-btn-primary qa-btn-arrow" href="/users/sign_up">
                 Start qualifying leads
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></svg>
               </a>
-              <a class="btn btn-outline-primary btn-lg px-3" href="/demos/tax-preparation">Try a live tax form</a>
+              <a class="qa-btn qa-btn-ghost" href="/demos/tax-preparation">Try a live tax form</a>
             </div>
-            <p class="text-secondary small">No credit card required. Free plan available.</p>
-          </div>
-          <div class="col-lg-6">
-            <figure class="mb-0">
-              <img class="product-shot" alt="The Qualified.at flow builder: a branching form drawn as a graph on a canvas, the AI copilot panel open beside it, and a live preview of the form itself." src="/static/screenshots/builder-copilot-preview.png">
-              <figcaption class="text-secondary small text-center mt-3">
-                One screen: the canvas, the AI copilot that writes into it, and the form exactly
-                as your lead will meet it.
-              </figcaption>
-            </figure>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Honest stats strip -->
-    <section class="py-4 border-top border-bottom">
-      <div class="container">
-        <div class="row text-center g-4">
-          <div class="col-6 col-md-3">
-            <h2 class="h1 mb-0 text-primary">5 min</h2>
-            <p class="text-secondary mb-0">to embed</p>
+            <p class="qa-hero-note">No credit card required. Free plan available.</p>
           </div>
-          <div class="col-6 col-md-3">
-            <h2 class="h1 mb-0 text-primary">1 tag</h2>
-            <p class="text-secondary mb-0">on the site you already have</p>
-          </div>
-          <div class="col-6 col-md-3">
-            <h2 class="h1 mb-0 text-primary">24/7</h2>
-            <p class="text-secondary mb-0">lead capture</p>
-          </div>
-          <div class="col-6 col-md-3">
-            <h2 class="h1 mb-0 text-primary">Free</h2>
-            <p class="text-secondary mb-0">plan to start</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Demos: three, professional services only -->
-    <section id="demos" class="section-lg">
-      <div class="container">
-        <div class="text-center mb-5">
-          <h2 class="display-6 fw-bold mb-2">Try it on a real form</h2>
-          <p class="lead text-secondary mx-auto mb-0" style="max-width: 44rem;">
-            Three working forms on fictional practices &mdash; tax, law, and bookkeeping.
-            Ramble at one in your own words and watch it skip the questions you just answered.
-          </p>
-        </div>
-        <div class="row g-4">
-          <div class="col-md-4">
-            <div class="card h-100" style="border-top: 3px solid #1d4ed8;">
-              <div class="card-body d-flex flex-column p-4">
-                <h3 class="h3 mb-1">Tax Preparation</h3>
-                <p class="text-secondary small mb-3">Meridian Tax Partners</p>
-                <p class="mb-4">A W-2 filer answers four questions. A business owner answers fourteen. Same flow.</p>
-                <div class="mt-auto">
-                  <a class="btn btn-outline-primary" href="/demos/tax-preparation">
-                    Try this form
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card h-100" style="border-top: 3px solid #b45309;">
-              <div class="card-body d-flex flex-column p-4">
-                <h3 class="h3 mb-1">Personal Injury Law</h3>
-                <p class="text-secondary small mb-3">Halloran &amp; Reeve</p>
-                <p class="mb-4">The lead sees what their case may be worth before anyone picks up the phone. You see which cases deserve the callback.</p>
-                <div class="mt-auto">
-                  <a class="btn btn-outline-primary" href="/demos/personal-injury">
-                    Try this form
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card h-100" style="border-top: 3px solid #65a30d;">
-              <div class="card-body d-flex flex-column p-4">
-                <h3 class="h3 mb-1">Bookkeeping &amp; CFO</h3>
-                <p class="text-secondary small mb-3">Clearledger Advisory</p>
-                <p class="mb-4">&ldquo;How far behind are you?&rdquo; is the whole pricing model. Asked kindly.</p>
-                <div class="mt-auto">
-                  <a class="btn btn-outline-primary" href="/demos/bookkeeping">
-                    Try this form
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="text-center mt-4">
-          <a class="btn btn-outline-secondary" href="/demos">Browse all ten demos</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Why we're different -->
-    <section id="different" class="section-lg bg-primary-lt">
-      <div class="container">
-        <div class="text-center mb-5">
-          <span class="badge bg-white text-primary mb-3 px-3 py-2 fs-5">The difference</span>
-          <h2 class="display-5 fw-bold mb-3">
-            Their AI stops at build time.<br class="d-none d-md-inline">
-            <span class="text-primary">Ours keeps working.</span>
-          </h2>
-          <p class="lead text-secondary mx-auto" style="max-width: 46rem;">
-            Nearly every &ldquo;AI form builder&rdquo; runs its model <strong>once, at design time</strong>,
-            to generate a form for <em>you</em>. After that it is an ordinary form, and your
-            lead still answers every question by hand.
-            Qualified.at has a copilot that builds the form too &mdash; and then runs the model again
-            <strong>every time a lead arrives</strong>, so the AI works for <em>them</em> as well as
-            for you. That second half is the half your lead actually feels.
-          </p>
         </div>
 
-        <div class="row g-4 align-items-stretch mb-5">
-          <div class="col-lg-6">
-            <div class="card h-100 border-0 shadow-sm">
-              <div class="card-body p-4">
-                <div class="d-flex align-items-center gap-2 mb-3">
-                  <span class="avatar avatar-sm bg-secondary-lt text-secondary flex-shrink-0" aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/></svg>
+        <!-- =========================================================== theater -->
+        <div class="qa-theater" id="theater" data-theater data-act="1">
+          <div class="qa-theater-bar">
+            <div class="qa-chips" role="tablist" aria-label="Choose an industry to watch">
+              <button class="qa-chip" type="button" role="tab" data-scene="tax" aria-selected="true">Tax preparation</button>
+              <button class="qa-chip" type="button" role="tab" data-scene="injury" aria-selected="false">Personal injury</button>
+              <button class="qa-chip" type="button" role="tab" data-scene="roofing" aria-selected="false">Roofing</button>
+            </div>
+
+            <div class="qa-theater-acts">
+              <button class="qa-act is-on" type="button" data-goto-act="1"><em>1</em> You build it</button>
+              <button class="qa-act" type="button" data-goto-act="2"><em>2</em> A lead arrives</button>
+              <button class="qa-act" type="button" data-el="replay" aria-label="Replay from the start">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747"/><path d="M20 4v5h-5"/></svg>
+                Replay
+              </button>
+            </div>
+          </div>
+
+          <div class="qa-window" data-el="window" aria-hidden="true">
+            <div class="qa-winbar">
+              <span class="qa-dots"><i></i><i></i><i></i></span>
+              <span class="qa-wintitle" data-el="wintitle">flow builder</span>
+              <span class="qa-wintools">
+                <span class="qa-tool">Show DSL</span>
+                <span class="qa-tool is-primary" data-el="previewbtn">Preview form</span>
+                <span class="qa-sync" data-el="sync">in sync</span>
+              </span>
+            </div>
+
+            <div class="qa-stage">
+              <!-- copilot -->
+              <aside class="qa-copilot">
+                <div class="qa-copilot-head">
+                  <span class="qa-spark">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11"/></svg>
                   </span>
-                  <h3 class="h4 mb-0 text-secondary">Typical AI form builder</h3>
+                  Build your form with AI
+                  <small>copilot</small>
                 </div>
-                <ol class="list-unstyled mb-0 text-secondary">
-                  <li class="d-flex gap-3 mb-3">
-                    <span class="badge bg-secondary-lt text-secondary flex-shrink-0">1</span>
-                    <span><strong class="text-secondary">AI runs here.</strong> You describe the form you want; it drafts the fields.</span>
-                  </li>
-                  <li class="d-flex gap-3 mb-3">
-                    <span class="badge bg-secondary-lt text-secondary flex-shrink-0">2</span>
-                    <span>You edit and publish it. The model's job is finished.</span>
-                  </li>
-                  <li class="d-flex gap-3 mb-3">
-                    <span class="badge bg-secondary-lt text-secondary flex-shrink-0">3</span>
-                    <span>Your lead lands on a static form and answers <strong>all 17 questions</strong>, one by one.</span>
-                  </li>
-                  <li class="d-flex gap-3">
-                    <span class="badge bg-secondary-lt text-secondary flex-shrink-0">4</span>
-                    <span>You get a submission. Someone still has to read it and work out what it's worth.</span>
-                  </li>
-                </ol>
+                <div class="qa-chat" data-el="chat"></div>
+                <div class="qa-composer">
+                  <div class="qa-input" data-el="prompt" data-placeholder="Describe your business — what you do, and what drives your pricing…"><span data-el="prompttext"></span><i class="qa-caret"></i></div>
+                  <button class="qa-send" type="button" data-el="send">Send</button>
+                </div>
+              </aside>
+
+              <!-- canvas -->
+              <div class="qa-canvas" data-el="canvas">
+                <div class="qa-fit" data-el="fit">
+                  <div class="qa-pan" data-el="pan">
+                    <svg class="qa-edges" data-el="edges" viewBox="0 0 640 1240" aria-hidden="true"></svg>
+                    <div data-el="nodes"></div>
+                    <div data-el="labels"></div>
+                  </div>
+                </div>
+                <div class="qa-accum" data-el="accum">&sum; price <b>currency</b> &middot; complexity <b>integer</b></div>
+                <div class="qa-scrim" data-el="scrim"></div>
+
+                <!-- what the firm sees, which the lead never does -->
+                <div class="qa-firm" data-el="firm">
+                  <div class="qa-firm-head">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3 8l4 -16l3 8h4"/></svg>
+                    What the firm sees
+                  </div>
+                  <div class="qa-firm-tier" data-el="firmtier">Group 3</div>
+                  <p data-el="firmroute">Routed straight to a partner.</p>
+                  <div class="qa-firm-grid">
+                    <div><b data-el="firmfilled">7</b> filled by AI</div>
+                    <div><b data-el="firmasked">4</b> asked</div>
+                  </div>
+                </div>
               </div>
+
+              <!-- the form, as the lead meets it -->
+              <section class="qa-preview" data-el="preview">
+                <div class="qa-pv-head">
+                  <span class="qa-pv-icon" data-el="pvicon">M</span>
+                  <span data-el="pvname">Meridian Tax Partners</span>
+                  <span class="qa-pv-x">&times;</span>
+                </div>
+                <div class="qa-pv-prog">
+                  <div class="qa-pv-prog-row">
+                    <span data-el="pvstep">Step 1 of 18</span>
+                    <span data-el="pvpct">0%</span>
+                  </div>
+                  <div class="qa-pv-bar"><i data-el="pvfill"></i></div>
+                </div>
+                <div class="qa-pv-body" data-el="pvbody"></div>
+                <div class="qa-pv-foot">served by qualified.at</div>
+              </section>
+
             </div>
+
+            <div class="qa-caption">
+              <span data-el="caption">Act one — you describe the job. The copilot draws the flow.</span>
+              <a data-el="demolink" href="/demos/tax-preparation">Open the real tax form</a>
+            </div>
+
+            <button class="qa-playbtn" type="button" data-el="playbtn">
+              <span>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M7 4v16l13 -8z"/></svg>
+                Play the walkthrough
+              </span>
+            </button>
           </div>
 
-          <div class="col-lg-6">
-            <div class="card h-100 border-primary shadow">
-              <div class="card-body p-4">
-                <div class="d-flex align-items-center gap-2 mb-3">
-                  <span class="avatar avatar-sm bg-primary text-white flex-shrink-0" aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11"/></svg>
-                  </span>
-                  <h3 class="h4 mb-0">Qualified.at</h3>
+          <div class="qa-timeline" aria-hidden="true"><i data-el="progress"></i></div>
+
+          <p class="qa-theater-foot">
+            <span>Not a screenshot &mdash; the interface, animated. The questions, the extracted fields and the dollar ranges come from the live demo flows.</span>
+          </p>
+
+          <p class="visually-hidden" data-el="summary"></p>
+        </div>
+      </section>
+
+      <!-- ======================================================= metric band -->
+      <section class="qa-band">
+        <div class="qa-wrap">
+          <div class="qa-band-grid">
+            <div class="qa-band-cell qa-in">
+              <b><span data-count-to="1">1</span></b>
+              <span>paragraph, in the lead's own words</span>
+            </div>
+            <div class="qa-band-cell qa-in">
+              <b><span data-count-to="4">4</span></b>
+              <span>questions left in the tax flow once the model has read it</span>
+            </div>
+            <div class="qa-band-cell qa-in">
+              <b><span data-count-to="10">10</span></b>
+              <span>working demo forms you can ramble at right now</span>
+            </div>
+            <div class="qa-band-cell qa-in">
+              <b>Free</b>
+              <span>plan to start, no card, and the engine is open source</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ scrub -->
+      <section class="qa-scrub" id="insight">
+        <div class="qa-scrub-track" data-scrub>
+          <div class="qa-scrub-stick">
+            <div class="qa-wrap">
+              <div class="qa-scrub-grid">
+                <div>
+                  <span class="qa-kicker">The insight</span>
+                  <h2 class="qa-h2" style="margin: 0.7rem 0 0.9rem;">Eleven questions. Or four.</h2>
+                  <p class="qa-lead" style="margin-bottom: 1.4rem;">
+                    The real Meridian Tax Partners flow is eighteen steps, eleven of them questions
+                    a visitor has to answer. Keep scrolling and watch one paragraph take them away.
+                  </p>
+
+                  <div class="qa-para">
+                    <div class="qa-para-head">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 9h8"/><path d="M8 13h6"/><path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"/></svg>
+                      What the lead typed
+                    </div>
+                    I'm <mark data-mark="1">married filing jointly</mark> with
+                    <mark data-mark="2">two kids</mark>. I'm on a W-2 at a tech company,
+                    my wife <mark data-mark="3">runs a consulting LLC</mark>, and we own
+                    <mark data-mark="4">one rental duplex</mark> in Oakland. We also
+                    <mark data-mark="5">sold some crypto on Coinbase</mark> last year. We live
+                    in California all year.
+                  </div>
+
+                  <div class="qa-counter">
+                    <b data-scrub-count>11</b>
+                    <span>
+                      questions still waiting for them<br>
+                      <span class="qa-dim">of eighteen steps in the flow</span>
+                    </span>
+                  </div>
                 </div>
-                <ol class="list-unstyled mb-0">
-                  <li class="d-flex gap-3 mb-3">
-                    <span class="badge bg-primary text-white flex-shrink-0">1</span>
-                    <span><strong>AI runs here too.</strong> Describe what you need to know; the copilot draws the flow, and you adjust it on the canvas.</span>
-                  </li>
-                  <li class="d-flex gap-3 mb-3">
-                    <span class="badge bg-primary-lt text-primary flex-shrink-0">2</span>
-                    <span>Your lead types <strong>one paragraph</strong> in their own words.</span>
-                  </li>
-                  <li class="d-flex gap-3 mb-3">
-                    <span class="badge bg-primary text-white flex-shrink-0">3</span>
-                    <span><strong>AI runs here.</strong> It extracts the structured answers and <strong>skips every question they already answered</strong> &mdash; 17 questions become four.</span>
-                  </li>
-                  <li class="d-flex gap-3">
-                    <span class="badge bg-primary-lt text-primary flex-shrink-0">4</span>
-                    <span>You get a scored, tiered lead <strong>with a price estimate attached</strong>.</span>
-                  </li>
-                </ol>
+
+                <div class="qa-steplist" data-steplist>
+                  <div class="qa-step"><em>1</em><span>Tell us about your tax situation</span><i>free text</i></div>
+                  <div class="qa-step"><em>2</em><span>clarify &mdash; the model reads it</span><i>server</i></div>
+                  <div class="qa-step"><em>3</em><span>Here's what we picked up</span><i>say</i></div>
+                  <div class="qa-step" data-count data-mark="1"><em>4</em><span>What's your filing status?</span><i>filled</i></div>
+                  <div class="qa-step" data-count data-mark="2"><em>5</em><span>How many dependents will you claim?</span><i>filled</i></div>
+                  <div class="qa-step" data-count data-mark="3"><em>6</em><span>Any self-employment or 1099 income?</span><i>filled</i></div>
+                  <div class="qa-step" data-count data-mark="3"><em>7</em><span>Do you own a business entity?</span><i>filled</i></div>
+                  <div class="qa-step" data-count data-mark="3"><em>8</em><span>What kind of entity is it?</span><i>filled</i></div>
+                  <div class="qa-step" data-count><em>9</em><span>Do you run payroll for employees?</span><i>asked</i></div>
+                  <div class="qa-step" data-count><em>10</em><span>Did you pay any 1099 contractors?</span><i>asked</i></div>
+                  <div class="qa-step" data-count data-mark="4"><em>11</em><span>How many rental properties do you own?</span><i>filled</i></div>
+                  <div class="qa-step" data-count data-mark="5"><em>12</em><span>Did you sell stock, crypto or investments?</span><i>filled</i></div>
+                  <div class="qa-step" data-count><em>13</em><span>Did you live or work in more than one state?</span><i>asked</i></div>
+                  <div class="qa-step" data-count><em>14</em><span>Any letters from the IRS this year?</span><i>asked</i></div>
+                  <div class="qa-step"><em>15</em><span>Nothing here identifies you</span><i>say</i></div>
+                  <div class="qa-step"><em>16</em><span>Your estimate: $1,400 &ndash; $2,000</span><i>say</i></div>
+                  <div class="qa-step"><em>17</em><span>Tier and routing, for the firm only</span><i>internal</i></div>
+                  <div class="qa-step"><em>18</em><span>Done</span><i>say</i></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="row g-4">
-          <div class="col-md-6 col-lg-3">
-            <h3 class="h4 mb-2">A graph, not a list</h3>
-            <p class="text-secondary mb-0">
-              You draw a branching graph, not a page of fields, and there is no ceiling on how
-              involved it gets &mdash; branches inside branches, paths that rejoin, whole interviews
-              that only some people ever see. A simple filer answers eight questions; a complex one
-              answers seventeen, from the same form. Nobody meets a question that doesn't apply
-              to them.
-            </p>
-          </div>
-          <div class="col-md-6 col-lg-3">
-            <h3 class="h4 mb-2">An estimate, not a submission</h3>
-            <p class="text-secondary mb-0">
-              Pricing rules live in the flow, so the lead sees a real range at the end
-              and you see the breakdown &mdash; plus a silent complexity tier that routes
-              them to the right person.
-            </p>
-          </div>
-          <div class="col-md-6 col-lg-3">
-            <h3 class="h4 mb-2">Qualifies without asking who they are</h3>
-            <p class="text-secondary mb-0">
-              Counts, bands and categories &mdash; never identifiers. You can scope and price
-              the work before a name or an email is ever requested, which is also why
-              these forms convert.
-            </p>
-          </div>
-          <div class="col-md-6 col-lg-3">
-            <h3 class="h4 mb-2">The engine is open source</h3>
-            <p class="text-secondary mb-0">
-              Flows run on the MIT-licensed
-              <a href="https://github.com/inquirex">Inquirex</a> gems, free forever.
-              Your flow definitions are portable text you can export and self-host.
-              No lock-in.
-            </p>
-          </div>
-        </div>
-
-        <div class="text-center mt-5">
-          <a class="btn btn-primary btn-lg px-4" href="/demos">
-            See it on ten live forms
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></svg>
-          </a>
-          <p class="text-secondary small mt-2 mb-0">
-            Real forms on ten fictional businesses. Ramble at one and watch it skip the questions you answered.
+        <div class="qa-wrap qa-wrap-narrow" style="padding-bottom: clamp(3rem, 6vw, 6rem);">
+          <p class="qa-lead qa-in" style="text-align:center;">
+            Seven of those answers were never asked for. They were already in the paragraph &mdash;
+            the model only had to read it, and the engine had to be built to skip what it found.
+            <a href="#demos">See it happen on a real form.</a>
           </p>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- How it works -->
-    <section id="how-it-works" class="section-lg">
-      <div class="container">
-        <div class="text-center mb-5">
-          <h2 class="display-5 fw-bold mb-3">How it works</h2>
-          <p class="lead text-secondary col-lg-8 mx-auto">Three steps from sign-up to qualified leads flowing into your pipeline.</p>
-        </div>
-        <div class="row g-4">
-          <div class="col-md-4">
-            <div class="card card-sm h-100 border-0 shadow-sm">
-              <div class="card-body text-center p-4">
-                <span class="avatar avatar-lg bg-primary-lt text-primary mb-3 mx-auto fs-2 fw-bold">1</span>
-                <h3 class="card-title">Describe it, or draw it</h3>
-                <p class="text-secondary mb-0">
-                  Tell the copilot what you need to know from a prospect and it builds the form.
-                  Rearrange it on the visual canvas whenever you like &mdash; drag a question in,
-                  point a branch somewhere else, undo it if you were wrong. Qualified.at picks the
-                  right control for each question, from radio buttons to dropdowns to sliders,
-                  whichever moves the lead through fastest.
-                </p>
+      <!-- ======================================================== the lanes -->
+      <section class="qa-section" id="different">
+        <div class="qa-wrap">
+          <div class="qa-head qa-in">
+            <span class="qa-kicker">The difference</span>
+            <h2 class="qa-h2">Their AI stops at build time. <span class="qa-wash">Ours keeps working.</span></h2>
+            <p class="qa-lead">
+              Nearly every &ldquo;AI form builder&rdquo; runs its model once, at design time, to
+              generate a form for <em>you</em>. After that it is an ordinary form, and your lead
+              still answers every question by hand. That second half is the half your lead
+              actually feels.
+            </p>
+          </div>
+
+          <div class="qa-lanes">
+            <div class="qa-lane qa-in">
+              <div class="qa-lane-head">
+                <h3 class="qa-h3 qa-dim">Typical AI form builder</h3>
+                <span class="qa-lane-tag">model runs once</span>
               </div>
+              <div class="qa-track">
+                <div class="qa-stop is-ai">
+                  <b>AI runs here</b>
+                  <p>You describe the form you want; it drafts the fields.</p>
+                </div>
+                <div class="qa-stop is-cold">
+                  <b>Build time ends</b>
+                  <p>You edit and publish. The model's job is finished.</p>
+                </div>
+                <div class="qa-stop is-cold">
+                  <b>A lead arrives</b>
+                  <p>They meet a static form and answer all seventeen questions, one at a time.</p>
+                </div>
+                <div class="qa-stop is-cold">
+                  <b>You get&hellip;</b>
+                  <p>A submission. Somebody still has to read it and work out what it's worth.</p>
+                </div>
+              </div>
+              <p class="qa-lane-note qa-dim">Most of them drop off before question nine.</p>
+            </div>
+
+            <div class="qa-lane qa-lane-us qa-in">
+              <div class="qa-lane-head">
+                <h3 class="qa-h3">Qualified.at</h3>
+                <span class="qa-lane-tag">model runs every time</span>
+              </div>
+              <div class="qa-track">
+                <div class="qa-stop is-ai">
+                  <b>AI runs here</b>
+                  <p>Describe what you need to know; the copilot draws the flow and you keep the canvas.</p>
+                </div>
+                <div class="qa-stop">
+                  <b>A lead arrives</b>
+                  <p>They type <strong>one paragraph</strong> in their own words. No form to read yet.</p>
+                </div>
+                <div class="qa-stop is-ai">
+                  <b>AI runs here too</b>
+                  <p>It extracts the structured answers and <strong>skips every question they already answered</strong>.</p>
+                </div>
+                <div class="qa-stop">
+                  <b>You get&hellip;</b>
+                  <p>A scored, tiered lead <strong>with a price estimate attached</strong>.</p>
+                </div>
+              </div>
+              <p class="qa-lane-note">
+                <b>Eleven questions became four</b>, and the visitor left with a number instead of
+                a promise that somebody will call.
+              </p>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="card card-sm h-100 border-0 shadow-sm">
-              <div class="card-body text-center p-4">
-                <span class="avatar avatar-lg bg-primary-lt text-primary mb-3 mx-auto fs-2 fw-bold">2</span>
-                <h3 class="card-title">Add one script tag</h3>
-                <p class="text-secondary mb-0">
-                  Paste one script tag into the site you already have &mdash; WordPress, Squarespace,
-                  plain HTML, anything. The widget can open when a visitor clicks a button like
-                  <em>&ldquo;Estimate My Fee&rdquo;</em>, or on its own after a delay. Your personal
-                  snippet is waiting in the dashboard when you sign up.
-                </p>
-              </div>
+
+          <div class="qa-grid qa-grid-4 qa-stagger" style="margin-top: 1.6rem;">
+            <div class="qa-card">
+              <h3 class="qa-h3">A graph, not a list</h3>
+              <p>
+                You draw a branching graph, and there is no ceiling on how involved it gets &mdash;
+                branches inside branches, paths that rejoin, whole interviews only some people
+                ever see. Nobody meets a question that doesn't apply to them.
+              </p>
+            </div>
+            <div class="qa-card">
+              <h3 class="qa-h3">An estimate, not a submission</h3>
+              <p>
+                Pricing rules live in the flow, so the lead sees a real range at the end and you
+                see the breakdown &mdash; plus a silent complexity tier that routes them to the
+                right person.
+              </p>
+            </div>
+            <div class="qa-card">
+              <h3 class="qa-h3">Qualifies without asking who they are</h3>
+              <p>
+                Counts, bands and categories &mdash; never identifiers. You can scope and price the
+                work before a name or an email is ever requested, which is also why these forms
+                convert.
+              </p>
+            </div>
+            <div class="qa-card">
+              <h3 class="qa-h3">The engine is open source</h3>
+              <p>
+                Flows run on the MIT-licensed <a href="https://github.com/inquirex">Inquirex</a>
+                gems, free forever. Your flow definitions are portable text you can export and
+                self-host. No lock-in.
+              </p>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="card card-sm h-100 border-0 shadow-sm">
-              <div class="card-body text-center p-4">
-                <span class="avatar avatar-lg bg-primary-lt text-primary mb-3 mx-auto fs-2 fw-bold">3</span>
-                <h3 class="card-title">Receive qualified leads</h3>
-                <p class="text-secondary mb-0">
-                  Leads answer qualifying questions right on your site. AI parses free-text answers into
-                  structured data. You get a pre-qualified lead with answers, not just a name and email.
-                </p>
-              </div>
-            </div>
-          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================= marquee -->
+      <div class="qa-marquee" aria-hidden="true">
+        <div class="qa-marquee-row" data-marquee>
+          <span>Tax preparation</span><span>Personal injury law</span><span>Immigration law</span><span>Roofing &amp; restoration</span><span>Home remodeling</span><span>Couples &amp; family therapy</span><span>Software development</span><span>Managed IT</span><span>Wedding photography</span><span>Bookkeeping &amp; CFO</span>
         </div>
       </div>
-    </section>
 
-    <!-- Pricing -->
-    <section id="pricing" class="section-lg">
-      <div class="container-fluid px-4">
-        <div class="text-center mb-5">
-          <h2 class="display-5 fw-bold">Simple, transparent pricing</h2>
-          <p class="lead text-secondary col-lg-8 mx-auto">Start free. Upgrade when your lead volume grows.</p>
-        </div>
-        <div class="row g-4 justify-content-center">
-    <div class="col-12 col-md-6 col-xl-3">
-      <div class="card card-md h-100 ">
-        <div class="card-body text-center d-flex flex-column p-4">
-          <div class="text-uppercase text-primary fw-medium mb-3">Free</div>
-          <div class="display-6 fw-bold my-3">
-              $0<span class="fs-5 fw-normal text-secondary">/mo</span>
+      <!-- =========================================================== demos -->
+      <section class="qa-section" id="demos">
+        <div class="qa-wrap">
+          <div class="qa-head qa-in">
+            <span class="qa-kicker">Ten live forms</span>
+            <h2 class="qa-h2">Ten industries. Ten intake forms. One paragraph each.</h2>
+            <p class="qa-lead">
+              Real working forms on fictional practices. Ramble at one in your own words and watch
+              it skip the questions you just answered. Three of them also play in the window above.
+            </p>
           </div>
-          <div class="flex-grow-1">
-            <ul class="list-unstyled lh-lg text-start mb-0">
-  <li class="d-flex align-items-start">
-  <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
 
-    <span>1,000 leads included
-      <span class="d-block text-secondary small">Total across all sites.</span>
-    </span>
-</li>
-<li class="d-flex align-items-center">
-  <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+          <div class="qa-grid qa-grid-3 qa-stagger">
+            <a class="qa-demo" href="/demos/tax-preparation" style="--qa-accent:#4263eb;">
+              <button class="qa-demo-here" type="button" data-play-scene="tax">Play it here</button>
+              <span class="qa-demo-tag">Clean binary-fact tiering</span>
+              <h3>Tax Preparation</h3>
+              <span class="qa-demo-firm">Meridian Tax Partners</span>
+              <p>A W-2 filer answers four questions. A business owner answers fourteen. Same flow.</p>
+              <span class="qa-demo-go">Try this form
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></svg>
+              </span>
+            </a>
 
-  2 sites
-</li>
+            <a class="qa-demo" href="/demos/personal-injury" style="--qa-accent:#b45309;">
+              <button class="qa-demo-here" type="button" data-play-scene="injury">Play it here</button>
+              <span class="qa-demo-tag">Value estimate, not a fee</span>
+              <h3>Personal Injury Law</h3>
+              <span class="qa-demo-firm">Halloran &amp; Reeve</span>
+              <p>Returns a case-value range, not a fee &mdash; severity times liability clarity.</p>
+              <span class="qa-demo-go">Try this form
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></svg>
+              </span>
+            </a>
 
-  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-<span>Visual flow editor, no limit on branching</span></li>
-  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-<span>All question types</span></li>
-  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-<span>Multiple Color &amp; Font Themes</span></li>
-</ul>
+            <a class="qa-demo" href="/demos/roofing" style="--qa-accent:#0ca678;">
+              <button class="qa-demo-here" type="button" data-play-scene="roofing">Play it here</button>
+              <span class="qa-demo-tag">Formula-based dollar estimate</span>
+              <h3>Roofing &amp; Restoration</h3>
+              <span class="qa-demo-firm">Ironvane Roofing</span>
+              <p>Squares times pitch times material &mdash; a formula the visitor can feel working.</p>
+              <span class="qa-demo-go">Try this form
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></svg>
+              </span>
+            </a>
 
+            <a class="qa-demo" href="/demos/immigration" style="--qa-accent:#4299e1;">
+              <span class="qa-demo-tag">Pathway-driven branching</span>
+              <h3>Immigration Law</h3>
+              <span class="qa-demo-firm">Northbound Immigration Law</span>
+              <p>Four pathways, four completely different interviews &mdash; chosen from one paragraph.</p>
+              <span class="qa-demo-go">Try this form
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></svg>
+              </span>
+            </a>
+
+            <a class="qa-demo" href="/demos/remodeling" style="--qa-accent:#ae3ec9;">
+              <span class="qa-demo-tag">Scope &times; finish budget band</span>
+              <h3>Home Remodeling</h3>
+              <span class="qa-demo-firm">Hollis &amp; Vane Design Build</span>
+              <p>Scope times finish level, turned into a budget band nobody has to negotiate for.</p>
+              <span class="qa-demo-go">Try this form
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></svg>
+              </span>
+            </a>
+
+            <a class="qa-demo" href="/demos/therapy" style="--qa-accent:#0891b2;">
+              <span class="qa-demo-tag">Solo-vs-together branching</span>
+              <h3>Couples &amp; Family Therapy</h3>
+              <span class="qa-demo-firm">Still Harbor Therapy</span>
+              <p>Filling this out alone or together changes the entire conversation.</p>
+              <span class="qa-demo-go">Try this form
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></svg>
+              </span>
+            </a>
+
+            <a class="qa-demo" href="/demos/software" style="--qa-accent:#7c6cff;">
+              <span class="qa-demo-tag">Feature-adder scoping</span>
+              <h3>Software Development</h3>
+              <span class="qa-demo-firm">Fathom &amp; Loom</span>
+              <p>Every feature you tick moves the number. Scoping, made visible.</p>
+              <span class="qa-demo-go">Try this form
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></svg>
+              </span>
+            </a>
+
+            <a class="qa-demo" href="/demos/managed-it" style="--qa-accent:#2dd4bf;">
+              <span class="qa-demo-tag">Per-seat recurring pricing</span>
+              <h3>Managed IT Services</h3>
+              <span class="qa-demo-firm">Bastion Managed IT</span>
+              <p>Per-seat pricing that lands on a real monthly number before anyone calls you.</p>
+              <span class="qa-demo-go">Try this form
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></svg>
+              </span>
+            </a>
+
+            <a class="qa-demo" href="/demos/wedding-photography" style="--qa-accent:#f59f00;">
+              <span class="qa-demo-tag">Coverage-based packaging</span>
+              <h3>Wedding Photography</h3>
+              <span class="qa-demo-firm">Golden Hour Collective</span>
+              <p>Hours, shooters and add-ons priced like a real package &mdash; no PII, no date.</p>
+              <span class="qa-demo-go">Try this form
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></svg>
+              </span>
+            </a>
+
+            <a class="qa-demo" href="/demos/bookkeeping" style="--qa-accent:#74b816;">
+              <span class="qa-demo-tag">Messiness &times; volume tiering</span>
+              <h3>Bookkeeping &amp; CFO</h3>
+              <span class="qa-demo-firm">Clearledger Advisory</span>
+              <p>&ldquo;How far behind are you?&rdquo; is the whole pricing model. Asked kindly.</p>
+              <span class="qa-demo-go">Try this form
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></svg>
+              </span>
+            </a>
           </div>
-          <div class="mt-4">
-              <a class="btn btn-primary w-100" href="/users/sign_up">Get started free</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-6 col-xl-3">
-      <div class="card card-md h-100 ">
-        <div class="card-body text-center d-flex flex-column p-4">
-          <div class="text-uppercase text-primary fw-medium mb-3">Standard</div>
-          <div class="display-6 fw-bold my-3">
-              $49<span class="fs-5 fw-normal text-secondary">/mo</span>
-          </div>
-          <div class="flex-grow-1">
-            <ul class="list-unstyled lh-lg text-start mb-0">
-  <li class="fw-bold mb-1">Everything in the Free plan, Plus:</li>
-  <li class="d-flex align-items-start">
-  <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
 
-    <span>Up to 2,000 leads / month</span>
-</li>
-  <li class="d-flex align-items-center">
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-
-    Extra $20/month for each extra 1,000
-  </li>
-<li class="d-flex align-items-center">
-  <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-
-  Unlimited sites
-</li>
-
-  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-<span>AI natural-language intake</span></li>
-  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-<span>Automated thank-you emails</span></li>
-  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-<span>White-label branding</span></li>
-</ul>
-
-          </div>
-          <div class="mt-4">
-              <a class="btn btn-primary w-100" href="/plans/standard/select">Get Standard</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-6 col-xl-3">
-      <div class="card card-md h-100 border-primary">
-          <div class="ribbon ribbon-top ribbon-bookmark bg-primary">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"/></svg>
-          </div>
-        <div class="card-body text-center d-flex flex-column p-4">
-          <div class="text-uppercase text-primary fw-medium mb-3">Professional</div>
-          <div class="display-6 fw-bold my-3">
-              $79<span class="fs-5 fw-normal text-secondary">/mo</span>
-          </div>
-          <div class="flex-grow-1">
-            <ul class="list-unstyled lh-lg text-start mb-0">
-  <li class="fw-bold mb-1">Everything in Standard, Plus:</li>
-  <li class="d-flex align-items-start">
-  <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-
-    <span>Up to 7,000 leads / month</span>
-</li>
-  <li class="d-flex align-items-center">
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-
-    Extra $10/month for each extra 1,000
-  </li>
-<li class="d-flex align-items-center">
-  <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-
-  Unlimited sites
-</li>
-
-  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-<span><strong>AI Copilot</strong> &mdash; build and change forms by describing them</span></li>
-  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-<span>Your own Google Analytics</span></li>
-  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-<span>Auto-Theme Builder for Your Site</span></li>
-  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-<span>CRM webhooks</span></li>
-  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-<span>Email campaigns from your own domain</span></li>
-  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-<span>24-hour support</span></li>
-</ul>
-
-          </div>
-          <div class="mt-4">
-              <a class="btn btn-primary w-100" href="/plans/pro/select">Get Professional</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-6 col-xl-3">
-      <div class="card card-md h-100 ">
-        <div class="card-body text-center d-flex flex-column p-4">
-          <div class="text-uppercase text-primary fw-medium mb-3">Business</div>
-          <div class="display-6 fw-bold my-3">
-              $129<span class="fs-5 fw-normal text-secondary">/mo</span>
-          </div>
-          <div class="flex-grow-1">
-            <ul class="list-unstyled lh-lg text-start mb-0">
-  <li class="fw-bold mb-1">Everything in Professional, Plus:</li>
-  <li class="d-flex align-items-start">
-  <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-
-    <span>Up to 20,000 leads / month</span>
-</li>
-  <li class="d-flex align-items-center">
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-
-    Extra $5/month for each extra 1,000
-  </li>
-<li class="d-flex align-items-center">
-  <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-
-  Unlimited sites
-</li>
-
-  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
-<span>Best per-lead economics at scale</span></li>
-</ul>
-
-          </div>
-          <div class="mt-4">
-              <a class="btn btn-primary w-100" href="/plans/business/select">Get Business</a>
-          </div>
-        </div>
-      </div>
-    </div>
-</div>
-
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="section-lg bg-primary text-white">
-      <div class="container text-center py-4">
-        <h2 class="display-5 fw-bold mb-3">Ready to stop screening leads manually?</h2>
-        <p class="small">Create your account in seconds. Your first 1,000 leads are free &mdash; no credit card required.</p>
-        <div class="d-flex justify-content-center gap-3 flex-wrap">
-          <a class="btn btn-light btn-lg px-4" href="/users/sign_up">Sign up free</a>
-          <a class="btn btn-outline-light btn-lg px-4" href="/users/sign_in">Log in</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="footer py-5" role="contentinfo">
-    <div class="container">
-      <div class="row g-4">
-        <div class="col-lg-4 mb-3">
-          <div class="d-flex align-items-center gap-2 mb-3">
-            <img src="/static/logos/qualified-at-logo-64x64.png" width="26" height="26" alt="" class="rounded flex-shrink-0">
-            <span class="navbar-brand-wordmark" aria-hidden="true" style="font-size: 26px; height: 26px;">qualified@</span>
-          </div>
-          <p class="small text-secondary mb-2">
-            An AI copilot that builds your intake form, a visual canvas for any branching you can
-            imagine, and AI that fills the form in for every lead who arrives.
+          <p class="qa-theater-foot qa-in" style="margin-top:1.6rem;">
+            <a class="qa-btn qa-btn-ghost qa-btn-arrow" href="/demos">
+              Browse all ten
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></svg>
+            </a>
           </p>
-          <p class="small text-secondary">&copy; 2026
-<a target="_blank" rel="noopener" href="https://agentica.group">Agentica Group Corp</a>,
-developed by
-<a target="_blank" rel="noopener" href="https://kig.re">Konstantin Gredeskoul</a>.
-All rights reserved.
-</p>
         </div>
-        <div class="col-6 col-lg-2">
-          <h5 class="mb-3">Product</h5>
-          <ul class="list-unstyled">
-            <li class="mb-2"><a class="text-secondary text-decoration-none" href="#demos">Live demos</a></li>
-            <li class="mb-2"><a class="text-secondary text-decoration-none" href="#how-it-works">How it works</a></li>
-            <li class="mb-2"><a class="text-secondary text-decoration-none" href="#pricing">Pricing</a></li>
-          </ul>
+      </section>
+
+      <!-- ==================================================== how it works -->
+      <section class="qa-section" id="how-it-works">
+        <div class="qa-wrap">
+          <div class="qa-head qa-in">
+            <span class="qa-kicker">How it works</span>
+            <h2 class="qa-h2">Three steps, and one of them is paste.</h2>
+          </div>
+
+          <div class="qa-grid qa-grid-3 qa-stagger">
+            <div class="qa-card">
+              <span class="qa-card-num">1</span>
+              <h3 class="qa-h3">Describe it, or draw it</h3>
+              <p>
+                Tell the copilot what you need to know from a prospect and it builds the form.
+                Rearrange it on the visual canvas whenever you like &mdash; drag a question in,
+                point a branch somewhere else, undo it if you were wrong. Qualified.at picks the
+                right control for each question, from radio buttons to sliders, whichever moves
+                the lead through fastest.
+              </p>
+            </div>
+            <div class="qa-card">
+              <span class="qa-card-num">2</span>
+              <h3 class="qa-h3">Add one script tag</h3>
+              <p>
+                Paste one script tag into the site you already have &mdash; WordPress, Squarespace,
+                plain HTML, anything. The widget can open when a visitor clicks a button like
+                <em>&ldquo;Estimate My Fee&rdquo;</em>, or on its own after a delay. Your personal
+                snippet is waiting in the dashboard when you sign up.
+              </p>
+            </div>
+            <div class="qa-card">
+              <span class="qa-card-num">3</span>
+              <h3 class="qa-h3">Receive qualified leads</h3>
+              <p>
+                Leads answer qualifying questions right on your site. The AI parses free-text
+                answers into structured data. You get a pre-qualified lead with answers, a
+                complexity tier and a fee range &mdash; not just a name and an email.
+              </p>
+            </div>
+          </div>
+
+          <!-- step two, shown -->
+          <div class="qa-embed qa-in" data-embed style="margin-top: clamp(2.5rem, 5vw, 4rem);">
+            <div class="qa-browser">
+              <div class="qa-browser-bar">
+                <span class="qa-dots"><i></i><i></i><i></i></span>
+                <span class="qa-url">https://your-firm.com</span>
+              </div>
+              <div class="qa-browser-body">
+                <div class="qa-fake-nav">
+                  <span class="qa-fake-logo"></span>
+                  <i></i><i></i><i></i>
+                </div>
+                <div class="qa-fake-h"></div>
+                <div class="qa-fake-h is-short"></div>
+                <div class="qa-fake-p w1"></div>
+                <div class="qa-fake-p w2"></div>
+                <div class="qa-fake-p w3"></div>
+                <div class="qa-fake-cards"><div></div><div></div><div></div></div>
+
+                <span class="qa-launcher">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 9h8"/><path d="M8 13h6"/><path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"/></svg>
+                  Estimate my fee
+                </span>
+
+                <div class="qa-mini">
+                  <div class="qa-mini-head">Meridian Tax Partners</div>
+                  <div class="qa-mini-body">
+                    <b>In a few sentences, tell us about your tax situation this year.</b>
+                    <div class="qa-mini-area"></div>
+                    <div class="qa-mini-btn">Next</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <span class="qa-kicker">Step two, shown</span>
+              <h3 class="qa-h2" style="font-size: clamp(1.5rem, 2.6vw, 2.2rem); margin: 0.8rem 0 1rem;">
+                It goes on the site you already have.
+              </h3>
+              <p class="qa-lead" style="font-size: 1.05rem;">
+                No redesign, no new page, no plugin. The widget renders in a shadow DOM, so it
+                cannot inherit or break your site's styles, and it can wait behind a button or
+                open itself after a delay.
+              </p>
+
+              <div class="qa-snippet">
+                <div class="qa-snippet-head">
+                  Your dashboard &rarr; embed snippet
+                  <span>Copy</span>
+                </div>
+<pre><span class="dim">&lt;!-- paste once, before &lt;/body&gt; --&gt;</span>
+<span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="val">"https://qualified.at/<span class="blur">xxxxxxxxxxxx</span>"</span>
+        <span class="attr">data-site</span>=<span class="val">"<span class="blur">xxxxxxxx-xxxx-xxxx</span>"</span> <span class="attr">defer</span><span class="tag">&gt;&lt;/script&gt;</span></pre>
+              </div>
+              <p class="qa-hero-note">
+                Blurred because yours is generated for your site &mdash; it is one copy button away
+                once you sign up.
+              </p>
+            </div>
+          </div>
         </div>
-        <div class="col-6 col-lg-2">
-          <h5 class="mb-3">Developers</h5>
-          <ul class="list-unstyled">
-            <li class="mb-2"><a class="text-secondary text-decoration-none" href="/docs">Documentation</a></li>
-            <li class="mb-2"><a class="text-secondary text-decoration-none" target="_blank" rel="noopener" href="https://github.com/inquirex">Open source (Inquirex)</a></li>
-          </ul>
+      </section>
+
+      <!-- ========================================================= pricing -->
+      <section class="qa-section qa-pricing" id="pricing">
+        <div class="qa-wrap">
+          <div class="qa-head qa-in">
+            <span class="qa-kicker">Pricing</span>
+            <h2 class="qa-h2">Simple, transparent pricing.</h2>
+            <p class="qa-lead">Start free. Upgrade when your lead volume grows.</p>
+          </div>
+
+          <div class="row g-4 justify-content-center qa-stagger">
+            <div class="col-12 col-md-6 col-xl-3">
+              <div class="card card-md h-100">
+                <div class="card-body text-center d-flex flex-column p-4">
+                  <div class="text-uppercase text-primary fw-medium mb-3">Free</div>
+                  <div class="display-6 fw-bold my-3">$0<span class="fs-5 fw-normal text-secondary">/mo</span></div>
+                  <div class="flex-grow-1">
+                    <ul class="list-unstyled lh-lg text-start mb-0">
+                      <li class="d-flex align-items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        <span>1,000 leads included
+                          <span class="d-block text-secondary small">Total across all sites.</span>
+                        </span>
+                      </li>
+                      <li class="d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        2 sites
+                      </li>
+                      <li class="d-flex align-items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        <span>Visual flow editor, no limit on branching</span>
+                      </li>
+                      <li class="d-flex align-items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        <span>All question types</span>
+                      </li>
+                      <li class="d-flex align-items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        <span>Multiple colour &amp; font themes</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="mt-4">
+                    <a class="qa-btn qa-btn-ghost w-100 justify-content-center" href="/users/sign_up">Get started free</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-3">
+              <div class="card card-md h-100">
+                <div class="card-body text-center d-flex flex-column p-4">
+                  <div class="text-uppercase text-primary fw-medium mb-3">Standard</div>
+                  <div class="display-6 fw-bold my-3">$49<span class="fs-5 fw-normal text-secondary">/mo</span></div>
+                  <div class="flex-grow-1">
+                    <ul class="list-unstyled lh-lg text-start mb-0">
+                      <li class="fw-bold mb-1">Everything in the Free plan, plus:</li>
+                      <li class="d-flex align-items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        <span>Up to 2,000 leads / month</span>
+                      </li>
+                      <li class="d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        Extra $20/month for each extra 1,000
+                      </li>
+                      <li class="d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        Unlimited sites
+                      </li>
+                      <li class="d-flex align-items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        <span>AI natural-language intake</span>
+                      </li>
+                      <li class="d-flex align-items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        <span>Automated thank-you emails</span>
+                      </li>
+                      <li class="d-flex align-items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        <span>White-label branding</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="mt-4">
+                    <a class="qa-btn qa-btn-ghost w-100 justify-content-center" href="/plans/standard/select">Get Standard</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-3">
+              <div class="card card-md h-100 border-primary">
+                <div class="ribbon ribbon-top ribbon-bookmark bg-primary">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"/></svg>
+                </div>
+                <div class="card-body text-center d-flex flex-column p-4">
+                  <div class="text-uppercase text-primary fw-medium mb-3">Professional</div>
+                  <div class="display-6 fw-bold my-3">$79<span class="fs-5 fw-normal text-secondary">/mo</span></div>
+                  <div class="flex-grow-1">
+                    <ul class="list-unstyled lh-lg text-start mb-0">
+                      <li class="fw-bold mb-1">Everything in Standard, plus:</li>
+                      <li class="d-flex align-items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        <span>Up to 7,000 leads / month</span>
+                      </li>
+                      <li class="d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        Extra $10/month for each extra 1,000
+                      </li>
+                      <li class="d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        Unlimited sites
+                      </li>
+                      <li class="d-flex align-items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        <span><strong>AI Copilot</strong> &mdash; build and change forms by describing them</span>
+                      </li>
+                      <li class="d-flex align-items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        <span>Your own Google Analytics</span>
+                      </li>
+                      <li class="d-flex align-items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        <span>Auto-theme builder for your site</span>
+                      </li>
+                      <li class="d-flex align-items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        <span>CRM webhooks</span>
+                      </li>
+                      <li class="d-flex align-items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        <span>Email campaigns from your own domain</span>
+                      </li>
+                      <li class="d-flex align-items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        <span>24-hour support</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="mt-4">
+                    <a class="qa-btn qa-btn-primary w-100 justify-content-center" href="/plans/pro/select">Get Professional</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-3">
+              <div class="card card-md h-100">
+                <div class="card-body text-center d-flex flex-column p-4">
+                  <div class="text-uppercase text-primary fw-medium mb-3">Business</div>
+                  <div class="display-6 fw-bold my-3">$129<span class="fs-5 fw-normal text-secondary">/mo</span></div>
+                  <div class="flex-grow-1">
+                    <ul class="list-unstyled lh-lg text-start mb-0">
+                      <li class="fw-bold mb-1">Everything in Professional, plus:</li>
+                      <li class="d-flex align-items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        <span>Up to 20,000 leads / month</span>
+                      </li>
+                      <li class="d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        Extra $5/month for each extra 1,000
+                      </li>
+                      <li class="d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        Unlimited sites
+                      </li>
+                      <li class="d-flex align-items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+                        <span>Best per-lead economics at scale</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="mt-4">
+                    <a class="qa-btn qa-btn-ghost w-100 justify-content-center" href="/plans/business/select">Get Business</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-6 col-lg-2">
-          <h5 class="mb-3">Legal</h5>
-          <ul class="list-unstyled">
-            <li class="mb-2"><a class="text-secondary text-decoration-none" href="/terms">Terms &amp; Conditions</a></li>
-            <li class="mb-2"><a class="text-secondary text-decoration-none" href="/privacy">Privacy Policy</a></li>
-          </ul>
+      </section>
+
+      <!-- ============================================================= CTA -->
+      <section class="qa-cta">
+        <div class="qa-wrap qa-wrap-narrow qa-in">
+          <h2 class="qa-h2">Finish the first call before it happens.</h2>
+          <p class="qa-lead" style="margin: 1.1rem auto 0; max-width: 34rem;">
+            Create your account in seconds. Your first 1,000 leads are free, and no credit card
+            is required.
+          </p>
+          <div class="qa-hero-actions">
+            <a class="qa-btn qa-btn-primary qa-btn-arrow" href="/users/sign_up">
+              Sign up free
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></svg>
+            </a>
+            <a class="qa-btn qa-btn-ghost" href="/demos">Poke at a demo first</a>
+          </div>
         </div>
-        <div class="col-6 col-lg-2">
-          <h5 class="mb-3">Account</h5>
-          <ul class="list-unstyled">
-            <li class="mb-2"><a class="text-secondary text-decoration-none" href="/users/sign_in">Log in</a></li>
-            <li class="mb-2"><a class="text-secondary text-decoration-none" href="/users/sign_up">Sign up</a></li>
-          </ul>
+      </section>
+    </main>
+
+    <!-- ============================================================= footer -->
+    <footer class="qa-footer" role="contentinfo">
+      <div class="qa-wrap">
+        <div class="qa-footer-grid">
+          <div>
+            <span class="qa-footer-brand">
+              <img src="/static/logos/qualified-at-logo-64x64.png" width="25" height="25" alt="" style="border-radius:6px;">
+              <span class="navbar-brand-wordmark" aria-hidden="true">qualified@</span>
+            </span>
+            <p>
+              An AI copilot that builds your intake form, a visual canvas for any branching you
+              can imagine, and AI that fills the form in for every lead who arrives.
+            </p>
+            <p>
+              &copy; 2026 <a target="_blank" rel="noopener" href="https://agentica.group">Agentica Group Corp</a>,
+              developed by <a target="_blank" rel="noopener" href="https://kig.re">Konstantin Gredeskoul</a>.
+              All rights reserved.
+            </p>
+          </div>
+          <div>
+            <h4>Product</h4>
+            <ul>
+              <li><a href="#watch">Watch it work</a></li>
+              <li><a href="#demos">Live demos</a></li>
+              <li><a href="#how-it-works">How it works</a></li>
+              <li><a href="#pricing">Pricing</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Developers</h4>
+            <ul>
+              <li><a href="/docs">Documentation</a></li>
+              <li><a target="_blank" rel="noopener" href="https://github.com/inquirex">Open source (Inquirex)</a></li>
+              <li><a href="/slides/">The SFRuby talk</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Legal</h4>
+            <ul>
+              <li><a href="/terms">Terms &amp; conditions</a></li>
+              <li><a href="/privacy">Privacy policy</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Account</h4>
+            <ul>
+              <li><a href="/users/sign_in">Log in</a></li>
+              <li><a href="/users/sign_up">Sign up</a></li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
+    </footer>
 
-  <script>
-    (() => {
-      const updateIcons = () => {
-        const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
-        const light = document.getElementById('theme-icon-light');
-        const dark = document.getElementById('theme-icon-dark');
-        if (light) light.style.display = isDark ? 'inline-block' : 'none';
-        if (dark) dark.style.display = isDark ? 'none' : 'inline-block';
-      };
-      updateIcons();
+    <a class="qa-btn qa-btn-primary qa-float qa-btn-arrow" data-float href="/demos/tax-preparation">
+      Try a live form
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></svg>
+    </a>
 
-      window.addEventListener('scroll', () => {
-        const navbar = document.querySelector('.landing-navbar');
-        if (navbar) navbar.classList.toggle('scrolled', window.scrollY > navbar.offsetHeight);
-      }, { passive: true });
-
-      document.addEventListener('click', (e) => {
-        const toggle = e.target.closest('#theme-toggle');
-        if (!toggle) return;
-        e.preventDefault();
-        const html = document.documentElement;
-        const next = html.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-bs-theme', next);
-        html.setAttribute('data-theme', next);
-        document.cookie = 'theme_mode=' + next + ';path=/;max-age=31536000;SameSite=Lax';
-        updateIcons();
-      });
-
-      // Static stand-in for Bootstrap's collapse JS: toggle the mobile menu.
-      const navToggle = document.getElementById('nav-toggle');
-      const navMenu = document.getElementById('landing-nav');
-      if (navToggle && navMenu) {
-        navToggle.addEventListener('click', () => {
-          const open = navMenu.classList.toggle('show');
-          navToggle.setAttribute('aria-expanded', String(open));
-        });
-        navMenu.addEventListener('click', (e) => {
-          if (e.target.closest('a')) navMenu.classList.remove('show');
-        });
-      }
-    })();
-  </script>
-</body>
-
+    <script src="/assets/scenes.js"></script>
+    <script src="/assets/theater.js"></script>
+    <script src="/assets/motion.js"></script>
+  </body>
 </html>
