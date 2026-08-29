@@ -1,25 +1,33 @@
 # qualified.at — Landing Page
 
-Single-page marketing site for [qualified.at](https://qualified.at) with an
-embedded reveal.js presentation (the SFRuby April 2026 deck).
+Static marketing homepage for [qualified.at](https://qualified.at). The page
+mirrors the production Rails app's marketing layout (Tabler-based dark theme,
+orange primary) so its markup can be ported into the app's homepage view.
+The repo also still hosts the reveal.js SFRuby April 2026 deck under `slides/`.
 
 ## Directory layout
 
 ```
 qualified-at-temp/
-├── index.html          ← landing page (self-contained HTML/CSS/JS)
+├── index.html          ← landing page (markup mirrors the production homepage)
+├── assets/             ← vendored application CSS + webfonts from qualified.at
+├── static/             ← logo and product screenshots used by the homepage
 ├── serve.json          ← MIME-type fix for npx serve (.md → text/plain)
 ├── site.webmanifest    ← PWA manifest (favicons)
 ├── favicon*.png        ← favicons
 ├── justfile            ← task runner (optional)
 └── slides/             ← fully static reveal.js presentation build
-    ├── index.html      ← deck entry point (loaded via iframe)
+    ├── index.html      ← deck entry point (available at /slides/)
     ├── slides.md       ← all slide content
     ├── assets/         ← CSS, JS (Three.js, Vanta, admonitions, typewriter)
     └── vendor/reveal/  ← reveal.js runtime (CSS, JS, plugins, fonts)
 ```
 
 Everything is static. No build step, no Node runtime, no database.
+
+Note: app links on the homepage (`/users/sign_up`, `/demos/...`, `/docs`,
+`/plans/...`) are root-relative and resolve only when the page is served on
+the qualified.at domain in front of (or ported into) the Rails app.
 
 ## Running locally
 
