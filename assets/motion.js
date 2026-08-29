@@ -211,12 +211,15 @@
       each(asked, function (r) { r.classList.toggle('is-asked', done); });
       if (count) count.textContent = String(remaining);
 
-      // keep the newest filled row in view inside the clipped list
-      if (list && reached > 0) {
-        var last = groups[Math.min(reached, groups.length) - 1].rows.slice(-1)[0];
-        if (last) {
-          var offset = Math.max(0, last.offsetTop - list.clientHeight * 0.55);
-          list.scrollTop = offset;
+      // Keep the newest filled row in view inside the clipped list, but only
+      // when the list is actually taller than its frame -- otherwise scrollTop
+      // is a no-op that leaves the list stranded when the scrub rewinds.
+      if (list && list.scrollHeight > list.clientHeight + 1) {
+        if (reached <= 0) {
+          list.scrollTop = 0;
+        } else {
+          var last = groups[Math.min(reached, groups.length) - 1].rows.slice(-1)[0];
+          if (last) list.scrollTop = Math.max(0, last.offsetTop - list.clientHeight * 0.55);
         }
       }
     };
@@ -295,11 +298,19 @@
     var pill = document.querySelector('[data-float]');
     var hero = document.querySelector('.qa-hero');
     if (!pill || !hero) return;
+    var end = document.querySelector('.qa-cta');
+
     var tick = function () {
-      pill.classList.toggle('is-in', window.scrollY > hero.offsetHeight * 0.75);
+      // Show it once the hero's own buttons are gone, and retire it again when
+      // the closing call to action arrives -- two competing CTAs on top of each
+      // other reads as clutter, and on a phone the pill would cover it.
+      var past = window.scrollY > hero.offsetHeight * 0.75;
+      var atEnd = end && end.getBoundingClientRect().top < window.innerHeight * 0.75;
+      pill.classList.toggle('is-in', past && !atEnd);
     };
     tick();
     window.addEventListener('scroll', tick, { passive: true });
+    window.addEventListener('resize', tick, { passive: true });
   }
 
   /* --------------------------------------- "play this one here" on a card */

@@ -1705,7 +1705,7 @@ body.body-marketing::after {
 
 .qa-counter {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0.7rem;
   margin-top: 1.3rem;
   padding-top: 1.1rem;
@@ -1793,7 +1793,15 @@ body.body-marketing::after {
   .qa-scrub-grid { grid-template-columns: 1fr; gap: 1.2rem; }
   .qa-scrub-stick { min-height: 0; height: auto; padding: 3rem 0; position: static; }
   .qa-scrub-track { height: auto; }
-  .qa-steplist { max-height: 340px; }
+
+  /* Narrow screens get the settled end state with no scroll-scrubbing, so the
+     list has to show all eighteen steps -- clipping it here would hide the
+     point of the section behind a scroll nobody can perform. */
+  .qa-steplist {
+    max-height: none;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1989,17 +1997,24 @@ body.body-marketing::after {
   pointer-events: none;
 }
 
-.qa-demo:hover, .qa-demo:focus-visible {
+.qa-demo:hover, .qa-demo:has(:focus-visible) {
   transform: translateY(-4px);
   box-shadow: 0 20px 44px rgba(0, 0, 0, 0.5);
   color: inherit;
   text-decoration: none;
 }
 
-.qa-demo:hover::before, .qa-demo:focus-visible::before { opacity: 1; }
+.qa-demo:hover::before, .qa-demo:has(:focus-visible)::before { opacity: 1; }
+
+.qa-demo-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 1.4rem;
+}
 
 .qa-demo-tag {
-  align-self: flex-start;
   padding: 0.2rem 0.55rem;
   border-radius: 100px;
   background: color-mix(in srgb, var(--qa-accent) 20%, transparent);
@@ -2021,24 +2036,45 @@ body.body-marketing::after {
 .qa-demo-firm { font-size: 0.78rem; color: var(--qa-fg-3); }
 .qa-demo p { margin: 0; font-size: 0.9rem; line-height: 1.5; color: var(--qa-fg-2); }
 
+.qa-demo-foot {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
 .qa-demo-go {
   margin-top: auto;
   padding-top: 0.7rem;
   display: inline-flex;
+  align-self: flex-start;
   align-items: center;
   gap: 0.35rem;
   font-size: 0.85rem;
   font-weight: 700;
   color: var(--qa-brand-2);
+  text-decoration: none;
+}
+
+.qa-demo-foot .qa-demo-go { margin-top: 0; align-self: center; }
+
+/* The whole card is the link target; the "play it here" button sits above it
+   with its own stacking order so it stays independently clickable. */
+.qa-demo-go::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
 .qa-demo-go svg { width: 1em; height: 1em; transition: transform 0.22s var(--qa-ease); }
 .qa-demo:hover .qa-demo-go svg { transform: translateX(3px); }
 
 .qa-demo-here {
-  position: absolute;
-  top: 0.8rem;
-  right: 0.8rem;
+  position: relative;
+  z-index: 2;
+  flex: none;
   padding: 0.22rem 0.55rem;
   border-radius: 100px;
   border: 1px solid var(--qa-line-hard);
@@ -2049,7 +2085,6 @@ body.body-marketing::after {
   text-transform: uppercase;
   color: var(--qa-fg-2);
   cursor: pointer;
-  z-index: 2;
   transition: color 0.2s, border-color 0.2s;
 }
 
@@ -2319,6 +2354,12 @@ body.body-marketing::after {
 }
 
 .qa-float.is-in { opacity: 1; transform: none; pointer-events: auto; }
+
+/* On a phone the pill sits on top of real content, so keep its footprint small. */
+@media (max-width: 700px) {
+  .qa-float { padding: 0.5rem 0.85rem; font-size: 0.8rem; }
+  .qa-float svg { width: 0.9em; height: 0.9em; }
+}
 
 /* --------------------------------------------------------------------------
    Scroll reveal
