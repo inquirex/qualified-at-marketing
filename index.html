@@ -1,834 +1,677 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>qualified.at — Smart Intake Forms Powered by AI</title>
-  <meta name="description" content="Build branching questionnaires that learn. One free-text answer replaces dozens of questions. Deterministic DSL meets probabilistic LLM." />
-  <meta name="author" content="Agentica Group" />
+<html
+  lang="en"
+  data-bs-theme="dark"
+  data-theme="dark"
+  data-bs-theme-base="slate"
+  data-bs-theme-font="sans-serif"
+  data-bs-theme-primary="orange"
+  data-bs-theme-radius="2"
+  >
+  <head>
+    <meta charset="utf-8">
+    <title>Qualified.at — They describe the situation. You get the answers, the tier, and the price.</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;400;500;600;700&family=Bebas+Neue&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <script>
+      (function() {
+        var m = document.cookie.match(/(?:^|;\s*)theme_mode=(\w+)/);
+        if (m) { document.documentElement.setAttribute('data-bs-theme', m[1]); document.documentElement.setAttribute('data-theme', m[1]); }
+      })();
+    </script>
 
-  <style>
-    /* ═══════════════════════════════════════════════════════════════
-       TOKENS
-       ═══════════════════════════════════════════════════════════════ */
-    :root {
-      --bg-deep:       #0c0806;
-      --bg-panel:      #161210;
-      --bg-surface:    #1e1a16;
-      --bg-elevated:   #2a2420;
-      --brand:         #e9b872;
-      --brand-light:   #fde68a;
-      --accent:        #ff4b15;
-      --accent-soft:   #ff7b4f;
-      --text-primary:  #fef8e7;
-      --text-body:     #d4cbbf;
-      --text-muted:    #9a8e80;
-      --border:        rgba(233,184,114,0.12);
-      --border-accent: rgba(255,75,21,0.25);
-      --glow-brand:    rgba(233,184,114,0.15);
-      --glow-accent:   rgba(255,75,21,0.12);
-      --radius:        12px;
-      --radius-lg:     20px;
-      --font-display:  'Bebas Neue', 'Impact', sans-serif;
-      --font-body:     'Dosis', sans-serif;
-      --font-mono:     'JetBrains Mono', monospace;
-    }
+    <meta name="description" content="Tell the copilot what you need to know and it draws a branching form. When a lead arrives, they type a paragraph in their own words. AI fills what it can, asks only what is left, and hands you a scored lead with a fee range. One script tag on the site you already have.">
+    <meta name="keywords" content="lead qualification, AI intake, professional services, tax preparation intake, legal intake, branching forms, fee estimate, embed widget">
+    <meta property="og:title" content="Qualified.at — They describe the situation. You get the answers, the tier, and the price.">
+    <meta property="og:description" content="The copilot draws your branching intake form. Leads describe their situation in a paragraph; AI fills what it can, asks only what is left, and hands you a scored lead with a fee range.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qualified.at">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Qualified.at — The first call, finished before anyone picks up">
+    <meta name="twitter:description" content="Leads describe their situation in their own words. AI fills the form, skips what was already answered, and hands you a scored lead with a fee range.">
+    <link rel="canonical" href="https://qualified.at">
 
-    /* ═══════════════════════════════════════════════════════════════
-       RESET & BASE
-       ═══════════════════════════════════════════════════════════════ */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-    body {
-      font-family: var(--font-body);
-      font-weight: 500;
-      color: var(--text-body);
-      background: var(--bg-deep);
-      line-height: 1.65;
-      overflow-x: hidden;
-    }
-    a { color: var(--brand); text-decoration: none; transition: color .2s; }
-    a:hover { color: var(--brand-light); }
-    ::selection { background: rgba(233,184,114,0.3); color: var(--text-primary); }
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
 
-    /* ═══════════════════════════════════════════════════════════════
-       LAYOUT
-       ═══════════════════════════════════════════════════════════════ */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-    section { padding: 6rem 0; position: relative; }
+    <link rel="stylesheet" href="/assets/application.css">
+  </head>
+  <body class="body-marketing">
+  <a href="#content" class="visually-hidden skip-link">Skip to main content</a>
 
-    /* ═══════════════════════════════════════════════════════════════
-       NOISE TEXTURE OVERLAY
-       ═══════════════════════════════════════════════════════════════ */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      pointer-events: none;
-      opacity: 0.025;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-repeat: repeat;
-      background-size: 256px;
-    }
-
-    /* ═══════════════════════════════════════════════════════════════
-       TYPOGRAPHY
-       ═══════════════════════════════════════════════════════════════ */
-    h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.06em; font-weight: 400; }
-    h1 { font-size: clamp(3.2rem, 8vw, 6.5rem); line-height: 0.95; color: var(--text-primary); }
-    h2 { font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.05; color: var(--text-primary); }
-    h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); line-height: 1.1; color: var(--brand); }
-    p { font-size: 1.15rem; max-width: 42em; }
-    .lead { font-size: 1.35rem; font-weight: 400; color: var(--text-body); line-height: 1.6; }
-    .mono { font-family: var(--font-mono); font-size: 0.9em; }
-    .text-brand { color: var(--brand); }
-    .text-accent { color: var(--accent); }
-    .text-muted { color: var(--text-muted); }
-
-    /* ═══════════════════════════════════════════════════════════════
-       NAV
-       ═══════════════════════════════════════════════════════════════ */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      padding: 1.2rem 2rem;
-      background: rgba(12,8,6,0.75);
-      backdrop-filter: blur(16px) saturate(1.4);
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
-      transition: background .3s;
-    }
-    .nav-brand {
-      font-family: var(--font-display);
-      font-size: 1.6rem;
-      letter-spacing: 0.12em;
-      color: var(--text-primary);
-    }
-    .nav-brand span { color: var(--accent); }
-    .nav-links { display: flex; gap: 2rem; align-items: center; }
-    .nav-links a { font-size: 0.95rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.04em; }
-    .nav-links a:hover { color: var(--brand); }
-
-    /* Hamburger toggle — hidden on wide viewports */
-    .nav-toggle {
-      display: none;
-      width: 42px; height: 42px;
-      background: rgba(22,18,16,0.7);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      cursor: pointer;
-      padding: 0;
-      align-items: center; justify-content: center;
-      flex-direction: column;
-      gap: 5px;
-      transition: background .15s, border-color .15s;
-    }
-    .nav-toggle:hover, .nav-toggle:focus-visible {
-      background: var(--bg-elevated);
-      border-color: var(--brand);
-      outline: none;
-    }
-    .nav-toggle span {
-      display: block; width: 20px; height: 2px;
-      background: var(--brand-light);
-      border-radius: 2px;
-      transition: transform .22s ease, opacity .18s ease;
-      transform-origin: center;
-    }
-    nav.open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    nav.open .nav-toggle span:nth-child(2) { opacity: 0; }
-    nav.open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-    /* ═══════════════════════════════════════════════════════════════
-       BUTTONS
-       ═══════════════════════════════════════════════════════════════ */
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.85rem 2rem;
-      font-family: var(--font-body); font-weight: 700; font-size: 1rem;
-      letter-spacing: 0.03em;
-      border: none; border-radius: var(--radius); cursor: pointer;
-      transition: all .25s ease;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent), #c43a0e);
-      color: #fff;
-      box-shadow: 0 4px 24px var(--glow-accent), inset 0 1px 0 rgba(255,255,255,0.15);
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(255,75,21,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
-    }
-    .btn-ghost {
-      background: transparent;
-      color: var(--brand);
-      border: 1.5px solid var(--border);
-    }
-    .btn-ghost:hover {
-      border-color: var(--brand);
-      background: rgba(233,184,114,0.06);
-    }
-
-    /* ═══════════════════════════════════════════════════════════════
-       HERO
-       ═══════════════════════════════════════════════════════════════ */
-    .hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column; justify-content: center;
-      padding-top: 5rem;
-      position: relative;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -20%; right: -15%;
-      width: 700px; height: 700px;
-      background: radial-gradient(circle, var(--glow-accent) 0%, transparent 65%);
-      filter: blur(80px);
-      pointer-events: none;
-    }
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: -10%; left: -10%;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, var(--glow-brand) 0%, transparent 60%);
-      filter: blur(60px);
-      pointer-events: none;
-    }
-    .hero-content { position: relative; z-index: 1; }
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: var(--accent);
-      margin-bottom: 1.5rem;
-      padding: 0.4rem 1rem;
-      border: 1px solid var(--border-accent);
-      border-radius: 100px;
-      background: rgba(255,75,21,0.04);
-    }
-    .hero-eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse-dot 2s infinite; }
-    @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-    .hero h1 {
-      background: linear-gradient(135deg, var(--text-primary) 30%, var(--brand) 70%, var(--accent-soft));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 1.5rem;
-    }
-    .hero .lead { margin-bottom: 2.5rem; }
-    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-    /* ═══════════════════════════════════════════════════════════════
-       PRESENTATION EMBED
-       ═══════════════════════════════════════════════════════════════ */
-    .deck-section {
-      padding: 5rem 0 6rem;
-    }
-    .deck-section h2 { text-align: center; margin-bottom: 0.6rem; }
-    .deck-section .lead { text-align: center; margin: 0 auto 3rem; }
-    .deck-frame {
-      position: relative;
-      max-width: 1400px;
-      margin: 0 auto;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: var(--bg-panel);
-      box-shadow:
-        0 0 0 1px rgba(233,184,114,0.05),
-        0 24px 80px rgba(0,0,0,0.5),
-        0 0 120px var(--glow-brand);
-    }
-    .deck-toolbar {
-      display: flex; align-items: center; gap: 0.5rem;
-      padding: 0.65rem 1rem;
-      background: var(--bg-elevated);
-      border-bottom: 1px solid var(--border);
-    }
-    .deck-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .deck-dot:nth-child(1) { background: #ff5f56; }
-    .deck-dot:nth-child(2) { background: #ffbd2e; }
-    .deck-dot:nth-child(3) { background: #27c93f; }
-    .deck-toolbar-title {
-      flex: 1; text-align: center;
-      font-family: var(--font-mono); font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-    .deck-frame iframe {
-      display: block;
-      width: 100%;
-      aspect-ratio: 17 / 10.8;
-      border: none;
-      background: #000;
-    }
-
-    /* ═══════════════════════════════════════════════════════════════
-       FEATURES GRID
-       ═══════════════════════════════════════════════════════════════ */
-    .features { padding: 6rem 0; }
-    .features h2 { text-align: center; margin-bottom: 0.6rem; }
-    .features .lead { text-align: center; margin: 0 auto 3.5rem; }
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
-    }
-    .feature-card {
-      padding: 2rem;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      background: var(--bg-panel);
-      transition: border-color .3s, transform .3s, box-shadow .3s;
-    }
-    .feature-card:hover {
-      border-color: var(--brand);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 30px var(--glow-brand);
-    }
-    .feature-icon {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 48px; height: 48px;
-      border-radius: 10px;
-      margin-bottom: 1.2rem;
-      font-size: 1.5rem;
-      background: rgba(233,184,114,0.08);
-      border: 1px solid var(--border);
-    }
-    .feature-card h3 {
-      margin-bottom: 0.6rem;
-      font-size: 1.3rem;
-    }
-    .feature-card p {
-      font-size: 1rem;
-      color: var(--text-muted);
-      line-height: 1.55;
-    }
-
-    /* ═══════════════════════════════════════════════════════════════
-       HOW IT WORKS — STEPS
-       ═══════════════════════════════════════════════════════════════ */
-    .how-it-works { padding: 6rem 0; }
-    .how-it-works h2 { text-align: center; margin-bottom: 3.5rem; }
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      position: relative;
-    }
-    .steps::before {
-      content: '';
-      position: absolute;
-      top: 36px;
-      left: 16.6%;
-      right: 16.6%;
-      height: 2px;
-      background: linear-gradient(90deg, var(--border) 0%, var(--brand) 50%, var(--border) 100%);
-    }
-    .step {
-      text-align: center;
-      position: relative;
-    }
-    .step-number {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 72px; height: 72px;
-      font-family: var(--font-display);
-      font-size: 2rem;
-      color: var(--accent);
-      border: 2px solid var(--border-accent);
-      border-radius: 50%;
-      background: var(--bg-deep);
-      margin-bottom: 1.5rem;
-      position: relative;
-      z-index: 1;
-    }
-    .step h3 { margin-bottom: 0.5rem; color: var(--text-primary); font-size: 1.4rem; }
-    .step p { font-size: 1rem; color: var(--text-muted); max-width: 28em; margin: 0 auto; }
-
-    /* ═══════════════════════════════════════════════════════════════
-       CODE BLOCK (INLINE EXAMPLE)
-       ═══════════════════════════════════════════════════════════════ */
-    .code-section { padding: 5rem 0; }
-    .code-section h2 { text-align: center; margin-bottom: 0.6rem; }
-    .code-section .lead { text-align: center; margin: 0 auto 3rem; }
-    .code-window {
-      max-width: 800px;
-      margin: 0 auto;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: rgba(14,9,4,0.92);
-      box-shadow: 0 16px 64px rgba(0,0,0,0.5);
-    }
-    .code-header {
-      display: flex; align-items: center; gap: 0.5rem;
-      padding: 0.7rem 1rem;
-      background: var(--bg-elevated);
-      border-bottom: 1px solid var(--border);
-    }
-    .code-header .deck-dot { width: 8px; height: 8px; }
-    .code-header span { flex: 1; text-align: center; font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); }
-    pre.code-block {
-      padding: 1.5rem 2rem;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      line-height: 1.7;
-      color: var(--text-body);
-      overflow-x: auto;
-      tab-size: 2;
-    }
-    .code-block .kw { color: #f97583; }
-    .code-block .sym { color: #79b8ff; }
-    .code-block .str { color: #9ecbff; }
-    .code-block .cmt { color: #6a737d; font-style: italic; }
-    .code-block .num { color: #ffab70; }
-    .code-block .fn { color: #b392f0; }
-
-    /* ═══════════════════════════════════════════════════════════════
-       CTA
-       ═══════════════════════════════════════════════════════════════ */
-    .cta-section {
-      padding: 6rem 0;
-      text-align: center;
-      position: relative;
-    }
-    .cta-section::before {
-      content: '';
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 600px; height: 400px;
-      background: radial-gradient(ellipse, var(--glow-accent) 0%, transparent 60%);
-      filter: blur(80px);
-      pointer-events: none;
-    }
-    .cta-section h2 { margin-bottom: 1rem; position: relative; }
-    .cta-section .lead { margin: 0 auto 2.5rem; position: relative; }
-    .cta-section .btn { position: relative; }
-
-    /* ═══════════════════════════════════════════════════════════════
-       FOOTER
-       ═══════════════════════════════════════════════════════════════ */
-    footer {
-      padding: 3rem 2rem;
-      text-align: center;
-      border-top: 1px solid var(--border);
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-    footer a { color: var(--text-muted); }
-    footer a:hover { color: var(--brand); }
-
-    /* ═══════════════════════════════════════════════════════════════
-       DIVIDERS
-       ═══════════════════════════════════════════════════════════════ */
-    .divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 0 auto;
-      max-width: 800px;
-    }
-
-    /* ═══════════════════════════════════════════════════════════════
-       ENTRANCE ANIMATIONS
-       ═══════════════════════════════════════════════════════════════ */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ═══════════════════════════════════════════════════════════════
-       RESPONSIVE
-       ═══════════════════════════════════════════════════════════════ */
-    @media (max-width: 768px) {
-      .steps { grid-template-columns: 1fr; }
-      .steps::before { display: none; }
-      .hero-actions { flex-direction: column; }
-      section { padding: 4rem 0; }
-
-      /* Show hamburger, collapse the link row into a dropdown panel */
-      .nav-toggle { display: flex; }
-
-      nav { padding: 0.9rem 1.2rem; }
-
-      .nav-links {
-        position: absolute;
-        top: calc(100% + 8px);
-        right: 1rem;
-        min-width: 230px;
-        max-width: calc(100vw - 2rem);
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-        padding: 0.5rem;
-        background: rgba(22,18,16,0.96);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        box-shadow: 0 20px 48px rgba(0,0,0,0.55);
-        backdrop-filter: blur(14px) saturate(1.4);
-        opacity: 0;
-        transform: translateY(-6px) scale(0.98);
-        transform-origin: top right;
-        pointer-events: none;
-        transition: opacity .18s ease, transform .18s ease;
-      }
-
-      nav.open .nav-links {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        pointer-events: auto;
-      }
-
-      .nav-links a {
-        padding: 0.7rem 0.9rem;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        color: var(--text-primary);
-      }
-      .nav-links a:hover {
-        background: rgba(255,75,21,0.12);
-        color: var(--accent-soft);
-      }
-
-      /* The GitHub ghost-button inside the dropdown — flatten into a normal
-       * row so it aligns with the other links. */
-      .nav-links a.btn {
-        padding: 0.7rem 0.9rem !important;
-        font-size: 0.95rem !important;
-        justify-content: flex-start;
-        background: transparent !important;
-        border: 1px solid var(--border-accent);
-        color: var(--accent-soft) !important;
-        margin-top: 4px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <!-- ════════════════════════════════════════════════════════════
-       NAV
-       ════════════════════════════════════════════════════════════ -->
-  <nav>
-    <div class="nav-brand">QUALIFIED<span>.</span>AT</div>
-    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">
-      <span></span><span></span><span></span>
-    </button>
-    <div class="nav-links" id="primary-nav">
-      <a href="#features">Features</a>
-      <a href="#how">How It Works</a>
-      <a href="#presentation">Presentation</a>
-      <a href="#dsl">DSL</a>
-      <a href="https://github.com/inquirex" class="btn btn-ghost" style="padding: 0.5rem 1.2rem; font-size: 0.85rem;">GitHub</a>
-    </div>
-  </nav>
-
-  <!-- ════════════════════════════════════════════════════════════
-       HERO
-       ════════════════════════════════════════════════════════════ -->
-  <section class="hero">
-    <div class="container hero-content">
-      <div class="hero-eyebrow">Powered by Inquirex &mdash; open-source Ruby gems</div>
-      <h1>Ask the Right<br/>Questions.<br/>Skip the Rest.</h1>
-      <p class="lead">
-        Build branching intake forms that learn from one free-text answer.
-        A deterministic DSL defines what you need. An LLM extracts what it can.
-        The engine only asks what's left.
-      </p>
-      <div class="hero-actions">
-        <a href="#presentation" class="btn btn-primary">Watch the Presentation</a>
-        <a href="https://github.com/inquirex/inquirex" class="btn btn-ghost">View on GitHub</a>
+  <!-- Navbar -->
+  <header role="banner">
+    <nav class="landing-navbar navbar navbar-expand-lg py-3 fixed-top" aria-label="Primary navigation">
+      <div class="container">
+        <a href="/" class="navbar-brand d-flex align-items-center gap-2" aria-label="Qualified.at home">
+          <img src="/static/logos/qualified-at-logo-64x64.png" width="29" height="29" alt="" class="rounded flex-shrink-0">
+          <span class="navbar-brand-wordmark" aria-hidden="true" style="font-size: 29px; height: 29px;">qualified@</span>
+        </a>
+        <button class="navbar-toggler" type="button" id="nav-toggle" aria-controls="landing-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="landing-nav">
+          <ul class="navbar-nav ms-auto align-items-lg-center">
+            <li class="nav-item"><a class="nav-link" href="#demos">Demos</a></li>
+            <li class="nav-item"><a class="nav-link" href="#different">Why we're different</a></li>
+            <li class="nav-item"><a class="nav-link" href="#how-it-works">How it works</a></li>
+            <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+            <li class="nav-item ms-lg-2">
+              <a href="#" class="btn btn-ghost-primary btn-icon" id="theme-toggle" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" id="theme-icon-light" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" id="theme-icon-dark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/></svg>
+              </a>
+            </li>
+            <li class="nav-item ms-lg-1 mt-2 mt-lg-0">
+              <a class="btn btn-primary w-100 w-lg-auto" href="/users/sign_in">Log in</a>
+            </li>
+            <li class="nav-item ms-lg-1 mt-2 mt-lg-0 mb-2 mb-lg-0">
+              <a class="btn btn-cta w-100 w-lg-auto" href="/users/sign_up">Get started free</a>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </section>
+    </nav>
+  </header>
 
-  <div class="divider"></div>
+  <main id="content">
+    <!-- Hero -->
+    <section class="section-lg landing-hero pb-5">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6">
+            <span class="badge bg-primary-lt text-primary mb-3 px-3 py-2 fs-5">The first call, finished before anyone picks up</span>
+            <h1 class="display-4 fw-bold mb-3">They describe the situation. You get <span class="text-primary">the answers, the tier, and the price</span>.</h1>
+            <p class="lead text-secondary mb-4">
+              Tell the copilot what you need to know and it draws a branching form. When a lead
+              arrives, they type a paragraph in their own words. AI fills what it can, asks only
+              what is left, and hands you a scored lead with a fee range. One script tag on the
+              site you already have.
+            </p>
+            <div class="d-flex flex-wrap gap-3 mb-4">
+              <a class="btn btn-primary btn-lg px-3" href="/users/sign_up">
+                Start qualifying leads
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></svg>
+              </a>
+              <a class="btn btn-outline-primary btn-lg px-3" href="/demos/tax-preparation">Try a live tax form</a>
+            </div>
+            <p class="text-secondary small">No credit card required. Free plan available.</p>
+          </div>
+          <div class="col-lg-6">
+            <figure class="mb-0">
+              <img class="product-shot" alt="The Qualified.at flow builder: a branching form drawn as a graph on a canvas, the AI copilot panel open beside it, and a live preview of the form itself." src="/static/screenshots/builder-copilot-preview.png">
+              <figcaption class="text-secondary small text-center mt-3">
+                One screen: the canvas, the AI copilot that writes into it, and the form exactly
+                as your lead will meet it.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <!-- ════════════════════════════════════════════════════════════
-       FEATURES
-       ════════════════════════════════════════════════════════════ -->
-  <section class="features" id="features">
-    <div class="container">
-      <h2 class="fade-in">What Makes It Different</h2>
-      <p class="lead fade-in">Not another form builder. A rules engine that speaks LLM.</p>
+    <!-- Honest stats strip -->
+    <section class="py-4 border-top border-bottom">
+      <div class="container">
+        <div class="row text-center g-4">
+          <div class="col-6 col-md-3">
+            <h2 class="h1 mb-0 text-primary">5 min</h2>
+            <p class="text-secondary mb-0">to embed</p>
+          </div>
+          <div class="col-6 col-md-3">
+            <h2 class="h1 mb-0 text-primary">1 tag</h2>
+            <p class="text-secondary mb-0">on the site you already have</p>
+          </div>
+          <div class="col-6 col-md-3">
+            <h2 class="h1 mb-0 text-primary">24/7</h2>
+            <p class="text-secondary mb-0">lead capture</p>
+          </div>
+          <div class="col-6 col-md-3">
+            <h2 class="h1 mb-0 text-primary">Free</h2>
+            <p class="text-secondary mb-0">plan to start</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      <div class="feature-grid">
-        <div class="feature-card fade-in">
-          <div class="feature-icon">&#9998;</div>
-          <h3>Conversational DSL</h3>
-          <p>Six verbs &mdash; <span class="mono">ask</span>, <span class="mono">say</span>, <span class="mono">header</span>, <span class="mono">btw</span>, <span class="mono">warning</span>, <span class="mono">confirm</span> &mdash; define a branching flow in pure Ruby. No YAML. No GUI drag-and-drop.</p>
+    <!-- Demos: three, professional services only -->
+    <section id="demos" class="section-lg">
+      <div class="container">
+        <div class="text-center mb-5">
+          <h2 class="display-6 fw-bold mb-2">Try it on a real form</h2>
+          <p class="lead text-secondary mx-auto mb-0" style="max-width: 44rem;">
+            Three working forms on fictional practices &mdash; tax, law, and bookkeeping.
+            Ramble at one in your own words and watch it skip the questions you just answered.
+          </p>
         </div>
-        <div class="feature-card fade-in">
-          <div class="feature-icon">&#9889;</div>
-          <h3>LLM-Powered Extraction</h3>
-          <p>The <span class="mono">clarify</span> verb sends one paragraph of free text to Claude or GPT and gets back structured, typed answers. Downstream questions are automatically skipped.</p>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card h-100" style="border-top: 3px solid #1d4ed8;">
+              <div class="card-body d-flex flex-column p-4">
+                <h3 class="h3 mb-1">Tax Preparation</h3>
+                <p class="text-secondary small mb-3">Meridian Tax Partners</p>
+                <p class="mb-4">A W-2 filer answers four questions. A business owner answers fourteen. Same flow.</p>
+                <div class="mt-auto">
+                  <a class="btn btn-outline-primary" href="/demos/tax-preparation">
+                    Try this form
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100" style="border-top: 3px solid #b45309;">
+              <div class="card-body d-flex flex-column p-4">
+                <h3 class="h3 mb-1">Personal Injury Law</h3>
+                <p class="text-secondary small mb-3">Halloran &amp; Reeve</p>
+                <p class="mb-4">The lead sees what their case may be worth before anyone picks up the phone. You see which cases deserve the callback.</p>
+                <div class="mt-auto">
+                  <a class="btn btn-outline-primary" href="/demos/personal-injury">
+                    Try this form
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100" style="border-top: 3px solid #65a30d;">
+              <div class="card-body d-flex flex-column p-4">
+                <h3 class="h3 mb-1">Bookkeeping &amp; CFO</h3>
+                <p class="text-secondary small mb-3">Clearledger Advisory</p>
+                <p class="mb-4">&ldquo;How far behind are you?&rdquo; is the whole pricing model. Asked kindly.</p>
+                <div class="mt-auto">
+                  <a class="btn btn-outline-primary" href="/demos/bookkeeping">
+                    Try this form
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="feature-card fade-in">
-          <div class="feature-icon">&#128736;</div>
-          <h3>JSON Wire Format</h3>
-          <p>Every flow serializes to JSON. Rules are AST objects, not lambdas. The frontend evaluates branching locally &mdash; zero server round-trips for pure logic.</p>
+        <div class="text-center mt-4">
+          <a class="btn btn-outline-secondary" href="/demos">Browse all ten demos</a>
         </div>
-        <div class="feature-card fade-in">
-          <div class="feature-icon">&#9878;</div>
-          <h3>11 Typed Data Fields</h3>
-          <p>String, text, integer, decimal, currency, boolean, enum, multi_enum, date, email, phone. Each maps to the right widget on every platform &mdash; TTY, web, mobile.</p>
+      </div>
+    </section>
+
+    <!-- Why we're different -->
+    <section id="different" class="section-lg bg-primary-lt">
+      <div class="container">
+        <div class="text-center mb-5">
+          <span class="badge bg-white text-primary mb-3 px-3 py-2 fs-5">The difference</span>
+          <h2 class="display-5 fw-bold mb-3">
+            Their AI stops at build time.<br class="d-none d-md-inline">
+            <span class="text-primary">Ours keeps working.</span>
+          </h2>
+          <p class="lead text-secondary mx-auto" style="max-width: 46rem;">
+            Nearly every &ldquo;AI form builder&rdquo; runs its model <strong>once, at design time</strong>,
+            to generate a form for <em>you</em>. After that it is an ordinary form, and your
+            lead still answers every question by hand.
+            Qualified.at has a copilot that builds the form too &mdash; and then runs the model again
+            <strong>every time a lead arrives</strong>, so the AI works for <em>them</em> as well as
+            for you. That second half is the half your lead actually feels.
+          </p>
         </div>
-        <div class="feature-card fade-in">
-          <div class="feature-icon">&#128200;</div>
-          <h3>Accumulators</h3>
-          <p>Running totals for pricing, complexity scoring, and feature gating. Declare once at the flow level, contribute from any step, read at runtime or post-processing.</p>
+
+        <div class="row g-4 align-items-stretch mb-5">
+          <div class="col-lg-6">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body p-4">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                  <span class="avatar avatar-sm bg-secondary-lt text-secondary flex-shrink-0" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/></svg>
+                  </span>
+                  <h3 class="h4 mb-0 text-secondary">Typical AI form builder</h3>
+                </div>
+                <ol class="list-unstyled mb-0 text-secondary">
+                  <li class="d-flex gap-3 mb-3">
+                    <span class="badge bg-secondary-lt text-secondary flex-shrink-0">1</span>
+                    <span><strong class="text-secondary">AI runs here.</strong> You describe the form you want; it drafts the fields.</span>
+                  </li>
+                  <li class="d-flex gap-3 mb-3">
+                    <span class="badge bg-secondary-lt text-secondary flex-shrink-0">2</span>
+                    <span>You edit and publish it. The model's job is finished.</span>
+                  </li>
+                  <li class="d-flex gap-3 mb-3">
+                    <span class="badge bg-secondary-lt text-secondary flex-shrink-0">3</span>
+                    <span>Your lead lands on a static form and answers <strong>all 17 questions</strong>, one by one.</span>
+                  </li>
+                  <li class="d-flex gap-3">
+                    <span class="badge bg-secondary-lt text-secondary flex-shrink-0">4</span>
+                    <span>You get a submission. Someone still has to read it and work out what it's worth.</span>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100 border-primary shadow">
+              <div class="card-body p-4">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                  <span class="avatar avatar-sm bg-primary text-white flex-shrink-0" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11"/></svg>
+                  </span>
+                  <h3 class="h4 mb-0">Qualified.at</h3>
+                </div>
+                <ol class="list-unstyled mb-0">
+                  <li class="d-flex gap-3 mb-3">
+                    <span class="badge bg-primary text-white flex-shrink-0">1</span>
+                    <span><strong>AI runs here too.</strong> Describe what you need to know; the copilot draws the flow, and you adjust it on the canvas.</span>
+                  </li>
+                  <li class="d-flex gap-3 mb-3">
+                    <span class="badge bg-primary-lt text-primary flex-shrink-0">2</span>
+                    <span>Your lead types <strong>one paragraph</strong> in their own words.</span>
+                  </li>
+                  <li class="d-flex gap-3 mb-3">
+                    <span class="badge bg-primary text-white flex-shrink-0">3</span>
+                    <span><strong>AI runs here.</strong> It extracts the structured answers and <strong>skips every question they already answered</strong> &mdash; 17 questions become four.</span>
+                  </li>
+                  <li class="d-flex gap-3">
+                    <span class="badge bg-primary-lt text-primary flex-shrink-0">4</span>
+                    <span>You get a scored, tiered lead <strong>with a price estimate attached</strong>.</span>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="feature-card fade-in">
-          <div class="feature-icon">&#127760;</div>
-          <h3>Embed Anywhere</h3>
-          <p>One <span class="mono">&lt;script&gt;</span> tag. The JavaScript widget renders in shadow DOM, fetches flow JSON from an API, walks it client-side, and posts answers back.</p>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-3">
+            <h3 class="h4 mb-2">A graph, not a list</h3>
+            <p class="text-secondary mb-0">
+              You draw a branching graph, not a page of fields, and there is no ceiling on how
+              involved it gets &mdash; branches inside branches, paths that rejoin, whole interviews
+              that only some people ever see. A simple filer answers eight questions; a complex one
+              answers seventeen, from the same form. Nobody meets a question that doesn't apply
+              to them.
+            </p>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <h3 class="h4 mb-2">An estimate, not a submission</h3>
+            <p class="text-secondary mb-0">
+              Pricing rules live in the flow, so the lead sees a real range at the end
+              and you see the breakdown &mdash; plus a silent complexity tier that routes
+              them to the right person.
+            </p>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <h3 class="h4 mb-2">Qualifies without asking who they are</h3>
+            <p class="text-secondary mb-0">
+              Counts, bands and categories &mdash; never identifiers. You can scope and price
+              the work before a name or an email is ever requested, which is also why
+              these forms convert.
+            </p>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <h3 class="h4 mb-2">The engine is open source</h3>
+            <p class="text-secondary mb-0">
+              Flows run on the MIT-licensed
+              <a href="https://github.com/inquirex">Inquirex</a> gems, free forever.
+              Your flow definitions are portable text you can export and self-host.
+              No lock-in.
+            </p>
+          </div>
+        </div>
+
+        <div class="text-center mt-5">
+          <a class="btn btn-primary btn-lg px-4" href="/demos">
+            See it on ten live forms
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></svg>
+          </a>
+          <p class="text-secondary small mt-2 mb-0">
+            Real forms on ten fictional businesses. Ramble at one and watch it skip the questions you answered.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how-it-works" class="section-lg">
+      <div class="container">
+        <div class="text-center mb-5">
+          <h2 class="display-5 fw-bold mb-3">How it works</h2>
+          <p class="lead text-secondary col-lg-8 mx-auto">Three steps from sign-up to qualified leads flowing into your pipeline.</p>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card card-sm h-100 border-0 shadow-sm">
+              <div class="card-body text-center p-4">
+                <span class="avatar avatar-lg bg-primary-lt text-primary mb-3 mx-auto fs-2 fw-bold">1</span>
+                <h3 class="card-title">Describe it, or draw it</h3>
+                <p class="text-secondary mb-0">
+                  Tell the copilot what you need to know from a prospect and it builds the form.
+                  Rearrange it on the visual canvas whenever you like &mdash; drag a question in,
+                  point a branch somewhere else, undo it if you were wrong. Qualified.at picks the
+                  right control for each question, from radio buttons to dropdowns to sliders,
+                  whichever moves the lead through fastest.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card card-sm h-100 border-0 shadow-sm">
+              <div class="card-body text-center p-4">
+                <span class="avatar avatar-lg bg-primary-lt text-primary mb-3 mx-auto fs-2 fw-bold">2</span>
+                <h3 class="card-title">Add one script tag</h3>
+                <p class="text-secondary mb-0">
+                  Paste one script tag into the site you already have &mdash; WordPress, Squarespace,
+                  plain HTML, anything. The widget can open when a visitor clicks a button like
+                  <em>&ldquo;Estimate My Fee&rdquo;</em>, or on its own after a delay. Your personal
+                  snippet is waiting in the dashboard when you sign up.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card card-sm h-100 border-0 shadow-sm">
+              <div class="card-body text-center p-4">
+                <span class="avatar avatar-lg bg-primary-lt text-primary mb-3 mx-auto fs-2 fw-bold">3</span>
+                <h3 class="card-title">Receive qualified leads</h3>
+                <p class="text-secondary mb-0">
+                  Leads answer qualifying questions right on your site. AI parses free-text answers into
+                  structured data. You get a pre-qualified lead with answers, not just a name and email.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="section-lg">
+      <div class="container-fluid px-4">
+        <div class="text-center mb-5">
+          <h2 class="display-5 fw-bold">Simple, transparent pricing</h2>
+          <p class="lead text-secondary col-lg-8 mx-auto">Start free. Upgrade when your lead volume grows.</p>
+        </div>
+        <div class="row g-4 justify-content-center">
+    <div class="col-12 col-md-6 col-xl-3">
+      <div class="card card-md h-100 ">
+        <div class="card-body text-center d-flex flex-column p-4">
+          <div class="text-uppercase text-primary fw-medium mb-3">Free</div>
+          <div class="display-6 fw-bold my-3">
+              $0<span class="fs-5 fw-normal text-secondary">/mo</span>
+          </div>
+          <div class="flex-grow-1">
+            <ul class="list-unstyled lh-lg text-start mb-0">
+  <li class="d-flex align-items-start">
+  <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+
+    <span>1,000 leads included
+      <span class="d-block text-secondary small">Total across all sites.</span>
+    </span>
+</li>
+<li class="d-flex align-items-center">
+  <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+
+  2 sites
+</li>
+
+  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+<span>Visual flow editor, no limit on branching</span></li>
+  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+<span>All question types</span></li>
+  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+<span>Multiple Color &amp; Font Themes</span></li>
+</ul>
+
+          </div>
+          <div class="mt-4">
+              <a class="btn btn-primary w-100" href="/users/sign_up">Get started free</a>
+          </div>
         </div>
       </div>
     </div>
-  </section>
+    <div class="col-12 col-md-6 col-xl-3">
+      <div class="card card-md h-100 ">
+        <div class="card-body text-center d-flex flex-column p-4">
+          <div class="text-uppercase text-primary fw-medium mb-3">Standard</div>
+          <div class="display-6 fw-bold my-3">
+              $49<span class="fs-5 fw-normal text-secondary">/mo</span>
+          </div>
+          <div class="flex-grow-1">
+            <ul class="list-unstyled lh-lg text-start mb-0">
+  <li class="fw-bold mb-1">Everything in the Free plan, Plus:</li>
+  <li class="d-flex align-items-start">
+  <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
 
-  <div class="divider"></div>
+    <span>Up to 2,000 leads / month</span>
+</li>
+  <li class="d-flex align-items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
 
-  <!-- ════════════════════════════════════════════════════════════
-       HOW IT WORKS
-       ════════════════════════════════════════════════════════════ -->
-  <section class="how-it-works" id="how">
-    <div class="container">
-      <h2 class="fade-in">Three Steps. One Insight.</h2>
+    Extra $20/month for each extra 1,000
+  </li>
+<li class="d-flex align-items-center">
+  <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
 
-      <div class="steps fade-in">
-        <div class="step">
-          <div class="step-number">1</div>
-          <h3>DSL Defines</h3>
-          <p>A Ruby DSL declares every question, data type, transition rule, and widget hint. The definition is frozen and thread-safe.</p>
-        </div>
-        <div class="step">
-          <div class="step-number">2</div>
-          <h3>LLM Extracts</h3>
-          <p>The user types one paragraph. The <span class="mono">clarify</span> verb sends it to an LLM with a strict schema. Structured data comes back in under 2 seconds.</p>
-        </div>
-        <div class="step">
-          <div class="step-number">3</div>
-          <h3>Engine Skips</h3>
-          <p><span class="mono">Engine#prefill!</span> merges extracted answers. Every downstream step with <span class="mono">skip_if not_empty</span> auto-advances. The user only answers what's left.</p>
+  Unlimited sites
+</li>
+
+  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+<span>AI natural-language intake</span></li>
+  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+<span>Automated thank-you emails</span></li>
+  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+<span>White-label branding</span></li>
+</ul>
+
+          </div>
+          <div class="mt-4">
+              <a class="btn btn-primary w-100" href="/plans/standard/select">Get Standard</a>
+          </div>
         </div>
       </div>
     </div>
-  </section>
+    <div class="col-12 col-md-6 col-xl-3">
+      <div class="card card-md h-100 border-primary">
+          <div class="ribbon ribbon-top ribbon-bookmark bg-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"/></svg>
+          </div>
+        <div class="card-body text-center d-flex flex-column p-4">
+          <div class="text-uppercase text-primary fw-medium mb-3">Professional</div>
+          <div class="display-6 fw-bold my-3">
+              $79<span class="fs-5 fw-normal text-secondary">/mo</span>
+          </div>
+          <div class="flex-grow-1">
+            <ul class="list-unstyled lh-lg text-start mb-0">
+  <li class="fw-bold mb-1">Everything in Standard, Plus:</li>
+  <li class="d-flex align-items-start">
+  <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
 
-  <div class="divider"></div>
+    <span>Up to 7,000 leads / month</span>
+</li>
+  <li class="d-flex align-items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
 
-  <!-- ════════════════════════════════════════════════════════════
-       PRESENTATION EMBED
-       ════════════════════════════════════════════════════════════ -->
-  <section class="deck-section" id="presentation">
-    <div class="container">
-      <h2 class="fade-in">The Full Story</h2>
-      <p class="lead fade-in">SFRuby, April 2026 &mdash; Deterministic DSL meets Probabilistic LLM</p>
+    Extra $10/month for each extra 1,000
+  </li>
+<li class="d-flex align-items-center">
+  <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
 
-      <div class="deck-frame fade-in">
-        <div class="deck-toolbar">
-          <div class="deck-dot"></div>
-          <div class="deck-dot"></div>
-          <div class="deck-dot"></div>
-          <span class="deck-toolbar-title">inquirex &mdash; slides</span>
-          <div style="width: 30px;"></div>
+  Unlimited sites
+</li>
+
+  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+<span><strong>AI Copilot</strong> &mdash; build and change forms by describing them</span></li>
+  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+<span>Your own Google Analytics</span></li>
+  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+<span>Auto-Theme Builder for Your Site</span></li>
+  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+<span>CRM webhooks</span></li>
+  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+<span>Email campaigns from your own domain</span></li>
+  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+<span>24-hour support</span></li>
+</ul>
+
+          </div>
+          <div class="mt-4">
+              <a class="btn btn-primary w-100" href="/plans/pro/select">Get Professional</a>
+          </div>
         </div>
-        <iframe src="slides/index.html" loading="lazy" allow="fullscreen" title="Inquirex Presentation"></iframe>
       </div>
     </div>
-  </section>
+    <div class="col-12 col-md-6 col-xl-3">
+      <div class="card card-md h-100 ">
+        <div class="card-body text-center d-flex flex-column p-4">
+          <div class="text-uppercase text-primary fw-medium mb-3">Business</div>
+          <div class="display-6 fw-bold my-3">
+              $129<span class="fs-5 fw-normal text-secondary">/mo</span>
+          </div>
+          <div class="flex-grow-1">
+            <ul class="list-unstyled lh-lg text-start mb-0">
+  <li class="fw-bold mb-1">Everything in Professional, Plus:</li>
+  <li class="d-flex align-items-start">
+  <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
 
-  <div class="divider"></div>
+    <span>Up to 20,000 leads / month</span>
+</li>
+  <li class="d-flex align-items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
 
-  <!-- ════════════════════════════════════════════════════════════
-       CODE EXAMPLE
-       ════════════════════════════════════════════════════════════ -->
-  <section class="code-section" id="dsl">
-    <div class="container">
-      <h2 class="fade-in">One DSL. Many Paths.</h2>
-      <p class="lead fade-in">A simple W-2 filer answers 8 questions. A complex business filer answers 17. Same definition.</p>
+    Extra $5/month for each extra 1,000
+  </li>
+<li class="d-flex align-items-center">
+  <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
 
-      <div class="code-window fade-in">
-        <div class="code-header">
-          <div class="deck-dot"></div>
-          <div class="deck-dot"></div>
-          <div class="deck-dot"></div>
-          <span>tax_intake.rb</span>
-          <div style="width: 26px"></div>
+  Unlimited sites
+</li>
+
+  <li class="d-flex align-items-start"><svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-green flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg>
+<span>Best per-lead economics at scale</span></li>
+</ul>
+
+          </div>
+          <div class="mt-4">
+              <a class="btn btn-primary w-100" href="/plans/business/select">Get Business</a>
+          </div>
         </div>
-<pre class="code-block"><span class="fn">Inquirex</span>.<span class="fn">define</span> <span class="sym">id:</span> <span class="str">"tax-intake"</span> <span class="kw">do</span>
-  <span class="fn">start</span> <span class="sym">:describe</span>
-
-  <span class="fn">ask</span> <span class="sym">:describe</span> <span class="kw">do</span>
-    <span class="fn">type</span> <span class="sym">:text</span>
-    <span class="fn">question</span> <span class="str">"Describe your tax situation."</span>
-    <span class="fn">transition</span> <span class="sym">to:</span> <span class="sym">:extracted</span>
-  <span class="kw">end</span>
-
-  <span class="fn">clarify</span> <span class="sym">:extracted</span> <span class="kw">do</span>           <span class="cmt"># LLM extracts structured data</span>
-    <span class="fn">from</span> <span class="sym">:describe</span>
-    <span class="fn">schema</span> <span class="sym">filing_status:</span> <span class="sym">:enum</span>, <span class="sym">dependents:</span> <span class="sym">:integer</span>
-    <span class="fn">transition</span> <span class="sym">to:</span> <span class="sym">:filing_status</span>
-  <span class="kw">end</span>
-
-  <span class="fn">ask</span> <span class="sym">:filing_status</span> <span class="kw">do</span>
-    <span class="fn">type</span> <span class="sym">:enum</span>
-    <span class="fn">question</span> <span class="str">"Filing status?"</span>
-    <span class="fn">skip_if</span> <span class="fn">not_empty</span>(<span class="sym">:filing_status</span>)  <span class="cmt"># auto-skip if LLM filled it</span>
-    <span class="fn">transition</span> <span class="sym">to:</span> <span class="sym">:done</span>
-  <span class="kw">end</span>
-
-  <span class="fn">say</span> <span class="sym">:done</span> <span class="kw">do</span>
-    <span class="fn">text</span> <span class="str">"Thank you!"</span>
-  <span class="kw">end</span>
-<span class="kw">end</span></pre>
       </div>
     </div>
-  </section>
+</div>
 
-  <div class="divider"></div>
-
-  <!-- ════════════════════════════════════════════════════════════
-       CTA
-       ════════════════════════════════════════════════════════════ -->
-  <section class="cta-section">
-    <div class="container">
-      <h2 class="fade-in">Ready to Build Smarter Forms?</h2>
-      <p class="lead fade-in">The gems are MIT-licensed and free forever. <span class="text-brand">qualified.at</span> is the hosted platform launching Q2 2026.</p>
-      <div class="fade-in">
-        <a href="https://github.com/inquirex/inquirex" class="btn btn-primary">Get Started on GitHub</a>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ════════════════════════════════════════════════════════════
-       FOOTER
-       ════════════════════════════════════════════════════════════ -->
-  <footer>
+    <!-- CTA -->
+    <section class="section-lg bg-primary text-white">
+      <div class="container text-center py-4">
+        <h2 class="display-5 fw-bold mb-3">Ready to stop screening leads manually?</h2>
+        <p class="small">Create your account in seconds. Your first 1,000 leads are free &mdash; no credit card required.</p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+          <a class="btn btn-light btn-lg px-4" href="/users/sign_up">Sign up free</a>
+          <a class="btn btn-outline-light btn-lg px-4" href="/users/sign_in">Log in</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer py-5" role="contentinfo">
     <div class="container">
-      &copy; 2026 <a href="https://agentica.group">Agentica Group</a> &mdash;
-      Built by <a href="https://kig.re">Konstantin Gredeskoul</a>
+      <div class="row g-4">
+        <div class="col-lg-4 mb-3">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <img src="/static/logos/qualified-at-logo-64x64.png" width="26" height="26" alt="" class="rounded flex-shrink-0">
+            <span class="navbar-brand-wordmark" aria-hidden="true" style="font-size: 26px; height: 26px;">qualified@</span>
+          </div>
+          <p class="small text-secondary mb-2">
+            An AI copilot that builds your intake form, a visual canvas for any branching you can
+            imagine, and AI that fills the form in for every lead who arrives.
+          </p>
+          <p class="small text-secondary">&copy; 2026
+<a target="_blank" rel="noopener" href="https://agentica.group">Agentica Group Corp</a>,
+developed by
+<a target="_blank" rel="noopener" href="https://kig.re">Konstantin Gredeskoul</a>.
+All rights reserved.
+</p>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h5 class="mb-3">Product</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a class="text-secondary text-decoration-none" href="#demos">Live demos</a></li>
+            <li class="mb-2"><a class="text-secondary text-decoration-none" href="#how-it-works">How it works</a></li>
+            <li class="mb-2"><a class="text-secondary text-decoration-none" href="#pricing">Pricing</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h5 class="mb-3">Developers</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a class="text-secondary text-decoration-none" href="/docs">Documentation</a></li>
+            <li class="mb-2"><a class="text-secondary text-decoration-none" target="_blank" rel="noopener" href="https://github.com/inquirex">Open source (Inquirex)</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h5 class="mb-3">Legal</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a class="text-secondary text-decoration-none" href="/terms">Terms &amp; Conditions</a></li>
+            <li class="mb-2"><a class="text-secondary text-decoration-none" href="/privacy">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h5 class="mb-3">Account</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a class="text-secondary text-decoration-none" href="/users/sign_in">Log in</a></li>
+            <li class="mb-2"><a class="text-secondary text-decoration-none" href="/users/sign_up">Sign up</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </footer>
 
-  <!-- ════════════════════════════════════════════════════════════
-       SCROLL-REVEAL
-       ════════════════════════════════════════════════════════════ -->
   <script>
-    // Hamburger dropdown for narrow viewports
-    (function () {
-      const nav = document.querySelector('nav');
-      const toggle = nav && nav.querySelector('.nav-toggle');
-      const links = nav && nav.querySelector('.nav-links');
-      if (!nav || !toggle || !links) return;
-
-      const setOpen = (open) => {
-        nav.classList.toggle('open', open);
-        toggle.setAttribute('aria-expanded', String(open));
+    (() => {
+      const updateIcons = () => {
+        const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+        const light = document.getElementById('theme-icon-light');
+        const dark = document.getElementById('theme-icon-dark');
+        if (light) light.style.display = isDark ? 'inline-block' : 'none';
+        if (dark) dark.style.display = isDark ? 'none' : 'inline-block';
       };
+      updateIcons();
 
-      toggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        setOpen(!nav.classList.contains('open'));
-      });
+      window.addEventListener('scroll', () => {
+        const navbar = document.querySelector('.landing-navbar');
+        if (navbar) navbar.classList.toggle('scrolled', window.scrollY > navbar.offsetHeight);
+      }, { passive: true });
 
-      // Close when a link is tapped (so the in-page anchor jump isn't behind the panel)
-      links.addEventListener('click', (e) => {
-        if (e.target.closest('a')) setOpen(false);
-      });
-
-      // Close on outside click and on Escape
       document.addEventListener('click', (e) => {
-        if (!nav.contains(e.target)) setOpen(false);
-      });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') setOpen(false);
+        const toggle = e.target.closest('#theme-toggle');
+        if (!toggle) return;
+        e.preventDefault();
+        const html = document.documentElement;
+        const next = html.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-bs-theme', next);
+        html.setAttribute('data-theme', next);
+        document.cookie = 'theme_mode=' + next + ';path=/;max-age=31536000;SameSite=Lax';
+        updateIcons();
       });
 
-      // If the viewport grows back past the breakpoint while open, reset state
-      const mq = window.matchMedia('(min-width: 769px)');
-      mq.addEventListener('change', (ev) => { if (ev.matches) setOpen(false); });
-    })();
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('visible');
-            observer.unobserve(e.target);
-          }
+      // Static stand-in for Bootstrap's collapse JS: toggle the mobile menu.
+      const navToggle = document.getElementById('nav-toggle');
+      const navMenu = document.getElementById('landing-nav');
+      if (navToggle && navMenu) {
+        navToggle.addEventListener('click', () => {
+          const open = navMenu.classList.toggle('show');
+          navToggle.setAttribute('aria-expanded', String(open));
         });
-      },
-      { threshold: 0.15 }
-    );
-    document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
-
-    // Once the presentation iframe loads, inject a style to vertically center
-    // slide content (the source deck uses center:false for stage use) and wire
-    // up left/right arrow keys so the audience can navigate naturally.
-    const deckIframe = document.querySelector('.deck-frame iframe');
-    if (deckIframe) {
-      deckIframe.addEventListener('load', () => {
-        try {
-          const iDoc = deckIframe.contentDocument;
-          // The presentation's theme.css fights Reveal's centering with:
-          //   .reveal .slides { inset: 50% auto -10% 50% !important }
-          //   .reveal .slides > section { padding: 80px 40px 20px 40px }
-          // Override both so Reveal's built-in center:true works cleanly
-          // at every viewport width.
-          const fix = iDoc.createElement('style');
-          fix.textContent = `
-            .reveal .slides {
-              inset: auto !important;
-              top: 50% !important;
-              left: 50% !important;
-            }
-            .reveal .slides > section,
-            .reveal .slides > section > section {
-              padding: 20px 40px !important;
-            }
-            .reveal .slides > section.title-slide {
-              padding-top: 20px !important;
-            }
-          `;
-          iDoc.head.appendChild(fix);
-
-          // Flip Reveal's built-in center flag — its flexbox centering
-          // scales correctly with the transform at any iframe size.
-          const R = deckIframe.contentWindow.Reveal;
-          if (R && R.configure) {
-            R.configure({ center: true });
-            R.layout();
-          }
-        } catch (_) { /* cross-origin — no-op */ }
-      });
-
-      // Forward left/right arrow keys from the parent page into the iframe's
-      // Reveal instance (by default only up/down work because the iframe
-      // doesn't have focus).
-      document.addEventListener('keydown', (e) => {
-        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-        try {
-          const Reveal = deckIframe.contentWindow.Reveal;
-          if (!Reveal) return;
-          if (e.key === 'ArrowRight') Reveal.next();
-          if (e.key === 'ArrowLeft')  Reveal.prev();
-        } catch (_) { /* cross-origin — no-op */ }
-      });
-    }
+        navMenu.addEventListener('click', (e) => {
+          if (e.target.closest('a')) navMenu.classList.remove('show');
+        });
+      }
+    })();
   </script>
-
 </body>
+
 </html>
